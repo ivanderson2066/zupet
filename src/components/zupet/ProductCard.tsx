@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Star, ShoppingBag, Loader2 } from "lucide-react";
+import { ShoppingBag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
@@ -49,19 +49,11 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
           </div>
         )}
         <Badge className="absolute top-3 left-3 bg-accent text-accent-foreground font-bold rounded-full">
-          -29%
+          Top venda
         </Badge>
       </div>
 
       <div className="p-4 flex flex-col flex-1 gap-2">
-        <div className="flex items-center gap-1 text-xs">
-          <div className="flex">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-3 w-3 fill-warning text-warning" />
-            ))}
-          </div>
-          <span className="text-muted-foreground">(4.8)</span>
-        </div>
         <h3 className="font-semibold text-sm leading-snug line-clamp-2 min-h-[2.5rem]">
           {p.title}
         </h3>
