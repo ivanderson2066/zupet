@@ -1,29 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { TopBar } from "@/components/zupet/TopBar";
+import { Header } from "@/components/zupet/Header";
+import { Hero } from "@/components/zupet/Hero";
+import { SocialProof } from "@/components/zupet/SocialProof";
+import { Benefits } from "@/components/zupet/Benefits";
+import { BestSellers } from "@/components/zupet/BestSellers";
+import { ProblemSolution } from "@/components/zupet/ProblemSolution";
+import { VideoShowcase } from "@/components/zupet/VideoShowcase";
+import { TrustSection } from "@/components/zupet/TrustSection";
+import { UrgencySection } from "@/components/zupet/UrgencySection";
+import { FAQ } from "@/components/zupet/FAQ";
+import { Footer } from "@/components/zupet/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Zupet — Pet Shop Premium para Cães e Gatos" },
+      {
+        name: "description",
+        content:
+          "Brinquedos inteligentes, acessórios inovadores e produtos premium para deixar seu pet mais feliz, ativo e saudável. Frete para todo Brasil.",
+      },
+      { property: "og:title", content: "Zupet — Pet Shop Premium para Cães e Gatos" },
+      {
+        property: "og:description",
+        content: "Seu pet mais feliz todos os dias. Produtos inteligentes e inovadores para cães e gatos.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <TopBar />
+      <Header />
+      <main>
+        <Hero />
+        <SocialProof />
+        <Benefits />
+        <BestSellers />
+        <ProblemSolution />
+        <VideoShowcase />
+        <UrgencySection />
+        <TrustSection />
+        <FAQ />
+      </main>
+      <Footer />
     </div>
   );
 }
