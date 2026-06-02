@@ -5,6 +5,7 @@ import { Hero } from "@/components/zupet/Hero";
 import { SocialProof } from "@/components/zupet/SocialProof";
 import { Benefits } from "@/components/zupet/Benefits";
 import { BestSellers } from "@/components/zupet/BestSellers";
+import { CategoriesGrid } from "@/components/zupet/CategoriesGrid";
 import { ProblemSolution } from "@/components/zupet/ProblemSolution";
 import { VideoShowcase } from "@/components/zupet/VideoShowcase";
 import { TrustSection } from "@/components/zupet/TrustSection";
@@ -43,6 +44,7 @@ function Index() {
         <Hero />
         <SocialProof />
         <Benefits />
+        <CategoriesGrid />
         <BestSellers />
         <ProblemSolution />
         <VideoShowcase />

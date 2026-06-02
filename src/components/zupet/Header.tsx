@@ -23,9 +23,11 @@ export function Header() {
 
           <nav className="hidden lg:flex items-center gap-7 text-sm font-medium">
             <Link to="/" className="hover:text-primary transition-colors">Início</Link>
-            <a href="#mais-vendidos" className="hover:text-primary transition-colors">Mais Vendidos</a>
-            <a href="#beneficios" className="hover:text-primary transition-colors">Benefícios</a>
-            <a href="#faq" className="hover:text-primary transition-colors">Ajuda</a>
+            <Link to="/categoria/$slug" params={{ slug: "caes" }} className="hover:text-primary transition-colors">Cães</Link>
+            <Link to="/categoria/$slug" params={{ slug: "gatos" }} className="hover:text-primary transition-colors">Gatos</Link>
+            <Link to="/categoria/$slug" params={{ slug: "brinquedos" }} className="hover:text-primary transition-colors">Brinquedos</Link>
+            <Link to="/categoria/$slug" params={{ slug: "tecnologia" }} className="hover:text-primary transition-colors">Tech Pet</Link>
+            <Link to="/sobre" className="hover:text-primary transition-colors">Sobre</Link>
           </nav>
 
           <div className="hidden md:flex flex-1 max-w-sm items-center relative">
