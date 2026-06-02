@@ -21,6 +21,7 @@ import { TopBar } from "@/components/zupet/TopBar";
 import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { BestSellers } from "@/components/zupet/BestSellers";
+import { LuxuryDescription } from "@/components/zupet/LuxuryDescription";
 import {
   storefrontApiRequest,
   PRODUCT_BY_HANDLE_QUERY,
@@ -127,6 +128,7 @@ function ProductPage() {
           />
         )}
 
+        {data && <LuxuryDescription title={data.title} description={data.description} />}
         <BestSellers />
       </main>
       <Footer />
