@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { CartDrawer } from "@/components/zupet/CartDrawer";
+import { MetaPixel } from "@/components/zupet/MetaPixel";
 import { useCartSync } from "@/hooks/useCartSync";
 
 function NotFoundComponent() {
@@ -120,6 +121,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <MetaPixel />
       <Outlet />
       <CartDrawer />
       <Toaster position="top-center" />
