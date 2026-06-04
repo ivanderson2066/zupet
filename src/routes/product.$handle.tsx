@@ -83,6 +83,19 @@ function ProductPage() {
     },
   });
 
+  useEffect(() => {
+    if (!data) return;
+    const v = data.variants.edges[0]?.node;
+    const price = parseFloat(v?.price.amount || data.priceRange.minVariantPrice.amount);
+    trackViewContent({
+      content_ids: [v?.id || data.id],
+      content_name: data.title,
+      value: price,
+      currency: v?.price.currencyCode || data.priceRange.minVariantPrice.currencyCode || "BRL",
+    });
+  }, [data]);
+
+
   return (
     <div className="min-h-screen bg-background pb-24 md:pb-0">
       <TopBar />
