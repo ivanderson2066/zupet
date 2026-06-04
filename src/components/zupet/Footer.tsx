@@ -60,7 +60,7 @@ export function Footer() {
               <li><Link to="/contato" className="hover:text-background">Central de atendimento</Link></li>
               <li>
                 <a href="mailto:ola@zupet.com.br" className="hover:text-background flex items-center gap-1.5">
-                  <Mail className="h-3.5 w-3.5" /> ola@zupet.com.br
+                  <Mail className="h-3.5 w-3.5" /><span>ola@zupet.com.br</span>
                 </a>
               </li>
               <li>
