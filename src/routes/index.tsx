@@ -11,6 +11,7 @@ import { VideoShowcase } from "@/components/zupet/VideoShowcase";
 import { TrustSection } from "@/components/zupet/TrustSection";
 import { UrgencySection } from "@/components/zupet/UrgencySection";
 import { FAQ } from "@/components/zupet/FAQ";
+import { Reviews } from "@/components/zupet/Reviews";
 import { Footer } from "@/components/zupet/Footer";
 
 export const Route = createFileRoute("/")({
@@ -50,6 +51,7 @@ function Index() {
         <VideoShowcase />
         <UrgencySection />
         <TrustSection />
+        <Reviews />
         <FAQ />
       </main>
       <Footer />
