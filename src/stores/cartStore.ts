@@ -5,6 +5,7 @@ import {
   storefrontApiRequest,
   SHOPIFY_STOREFRONT_TOKEN,
 } from "@/lib/shopify";
+import { trackAddToCart } from "@/lib/pixel";
 
 export interface CartItem {
   lineId: string | null;
@@ -134,6 +135,13 @@ export const useCartStore = create<CartStore>()(
         const { items, cartId, clearCart } = get();
         const existing = items.find((i) => i.variantId === item.variantId);
         set({ isLoading: true });
+        trackAddToCart({
+          content_ids: [item.variantId],
+          content_name: item.product?.node?.title || "Produto",
+          value: parseFloat(item.price.amount) * item.quantity,
+          currency: item.price.currencyCode || "BRL",
+          quantity: item.quantity,
+        });
         try {
           if (!cartId) {
             const r = await createCart({ ...item, lineId: null });

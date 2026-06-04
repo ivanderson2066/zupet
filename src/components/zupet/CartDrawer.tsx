@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2, ShieldCheck } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
+import { trackInitiateCheckout } from "@/lib/pixel";
 
 export function CartDrawer() {
   const isOpen = useCartStore((s) => s.isOpen);
@@ -33,6 +34,12 @@ export function CartDrawer() {
   const checkout = () => {
     const url = getCheckoutUrl();
     if (url) {
+      trackInitiateCheckout({
+        content_ids: items.map((i) => i.variantId),
+        num_items: totalItems,
+        value: totalPrice,
+        currency,
+      });
       window.open(url, "_blank");
       setOpen(false);
     }
