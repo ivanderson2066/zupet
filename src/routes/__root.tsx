@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { CartDrawer } from "@/components/zupet/CartDrawer";
 import { MetaPixel } from "@/components/zupet/MetaPixel";
+import { WhatsAppButton } from "@/components/zupet/WhatsAppButton";
 import { useCartSync } from "@/hooks/useCartSync";
 
 function NotFoundComponent() {
@@ -124,6 +125,7 @@ function RootComponent() {
       <MetaPixel />
       <Outlet />
       <CartDrawer />
+      <WhatsAppButton />
       <Toaster position="top-center" />
     </QueryClientProvider>
   );

@@ -12,6 +12,7 @@ import { TrustSection } from "@/components/zupet/TrustSection";
 import { UrgencySection } from "@/components/zupet/UrgencySection";
 import { FAQ } from "@/components/zupet/FAQ";
 import { Reviews } from "@/components/zupet/Reviews";
+import { Newsletter } from "@/components/zupet/Newsletter";
 import { Footer } from "@/components/zupet/Footer";
 
 export const Route = createFileRoute("/")({
@@ -53,6 +54,7 @@ function Index() {
         <TrustSection />
         <Reviews />
         <FAQ />
+        <Newsletter />
       </main>
       <Footer />
     </div>
