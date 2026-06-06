@@ -9,7 +9,10 @@ export function FreeShippingBar() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const sum = items.reduce((acc, it) => acc + Number(it.price ?? 0) * it.quantity, 0);
+    const sum = items.reduce(
+      (acc, it) => acc + Number(it.price?.amount ?? 0) * it.quantity,
+      0,
+    );
     setTotal(sum);
   }, [items]);
 
