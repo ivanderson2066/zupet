@@ -95,6 +95,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#FF6B35" },
+      { property: "og:title", content: "Zupet — Pet Shop Premium" },
+      { name: "twitter:title", content: "Zupet — Pet Shop Premium" },
+      { name: "description", content: "Zupet is a premium online pet store designed for high conversion of viral pet products." },
+      { property: "og:description", content: "Zupet is a premium online pet store designed for high conversion of viral pet products." },
+      { name: "twitter:description", content: "Zupet is a premium online pet store designed for high conversion of viral pet products." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/79295b21-bc6c-41f6-bfa2-8b1273267db6/id-preview-9359f9ab--eac65acb-9552-418c-96b9-33da6c51d4c2.lovable.app-1780752613650.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/79295b21-bc6c-41f6-bfa2-8b1273267db6/id-preview-9359f9ab--eac65acb-9552-418c-96b9-33da6c51d4c2.lovable.app-1780752613650.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
