@@ -15,6 +15,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { CartDrawer } from "@/components/zupet/CartDrawer";
 import { MetaPixel } from "@/components/zupet/MetaPixel";
 import { WhatsAppButton } from "@/components/zupet/WhatsAppButton";
+import { FreeShippingBar } from "@/components/zupet/FreeShippingBar";
+import { ExitIntent } from "@/components/zupet/ExitIntent";
 import { useCartSync } from "@/hooks/useCartSync";
 
 function NotFoundComponent() {
@@ -92,9 +94,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Zupet" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#2563EB" },
+      { name: "theme-color", content: "#FF6B35" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
+      { rel: "icon", type: "image/png", sizes: "512x512", href: "/icon-512.png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -123,9 +132,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <MetaPixel />
+      <FreeShippingBar />
       <Outlet />
       <CartDrawer />
       <WhatsAppButton />
+      <ExitIntent />
       <Toaster position="top-center" />
     </QueryClientProvider>
   );
