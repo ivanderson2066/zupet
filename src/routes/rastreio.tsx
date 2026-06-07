@@ -48,7 +48,7 @@ function RastreioPage() {
               número <strong className="text-foreground">{code || "do seu pedido"}</strong>.
             </p>
             <Button asChild className="bg-success hover:bg-success/90 text-success-foreground rounded-full">
-              <a href={`https://wa.me/5511999999999?text=Quero%20rastrear%20o%20pedido%20${encodeURIComponent(code)}`} target="_blank" rel="noopener noreferrer">
+              <a href={`https://wa.me/5598991891675?text=Quero%20rastrear%20o%20pedido%20${encodeURIComponent(code)}`} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="h-4 w-4 mr-2" /> Rastrear no WhatsApp
               </a>
             </Button>

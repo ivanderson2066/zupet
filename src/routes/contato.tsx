@@ -20,7 +20,7 @@ function ContatoPage() {
   return (
     <PageShell title="Fale com a gente" subtitle="Atendimento humano, premium e rápido. Estamos aqui para ajudar você e o seu pet.">
       <div className="not-prose grid md:grid-cols-2 gap-4">
-        <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-border bg-card p-6 hover:shadow-elegant transition-all">
+        <a href="https://wa.me/5598991891675" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-border bg-card p-6 hover:shadow-elegant transition-all">
           <div className="h-12 w-12 rounded-xl bg-success/15 grid place-items-center mb-4">
             <MessageCircle className="h-6 w-6 text-success" />
           </div>
