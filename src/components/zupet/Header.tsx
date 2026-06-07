@@ -40,7 +40,7 @@ export function Header() {
               size="sm"
               className="hidden sm:inline-flex bg-success hover:bg-success/90 text-success-foreground rounded-full font-semibold"
             >
-              <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/5598991891675" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="h-4 w-4 mr-1.5" />
                 WhatsApp
               </a>

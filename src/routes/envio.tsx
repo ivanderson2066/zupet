@@ -19,7 +19,7 @@ export const Route = createFileRoute("/envio")({
         <li><strong>Norte:</strong> 7 a 14 dias úteis</li>
       </ul>
       <h2>Frete grátis</h2>
-      <p>Frete grátis para compras acima de R$ 199 em todo o Brasil (modalidade econômica).</p>
+      <p>Frete grátis para compras acima de R$ 49 em todo o Brasil (modalidade econômica).</p>
       <h2>Envio expresso</h2>
       <p>Disponível na finalização da compra com prazos reduzidos via transportadora premium.</p>
       <h2>Rastreio</h2>

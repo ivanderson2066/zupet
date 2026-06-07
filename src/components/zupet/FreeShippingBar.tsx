@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Truck } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 
-const THRESHOLD = 199;
+const THRESHOLD = 49;
 
 export function FreeShippingBar() {
   const items = useCartStore((s) => s.items);

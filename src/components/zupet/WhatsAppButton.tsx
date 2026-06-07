@@ -1,6 +1,6 @@
 import { MessageCircle } from "lucide-react";
 
-const PHONE = "5511999999999"; // Trocar pelo WhatsApp oficial da Zupet
+const PHONE = "5598991891675"; // WhatsApp oficial da Zupet
 const MESSAGE = "Olá! Vim pelo site da Zupet e gostaria de ajuda.";
 
 export function WhatsAppButton() {
