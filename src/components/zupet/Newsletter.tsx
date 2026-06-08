@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { claimCoupon } from "@/lib/claimCoupon";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -12,14 +13,21 @@ export function Newsletter() {
     e.preventDefault();
     if (!email) return;
     setLoading(true);
-    // Persistência simples — integrar com Klaviyo/Mailchimp depois.
     try {
-      const list = JSON.parse(localStorage.getItem("zupet-newsletter") || "[]");
-      if (!list.includes(email)) list.push(email);
-      localStorage.setItem("zupet-newsletter", JSON.stringify(list));
-      toast.success("Cupom de 10% enviado!", {
-        description: "Confira seu e-mail nos próximos minutos.",
-      });
+      const result = await claimCoupon(email, "newsletter");
+      if (result.error) {
+        toast.error("Não foi possível resgatar agora", { description: result.error });
+        return;
+      }
+      if (result.alreadyClaimed) {
+        toast.info("Você já resgatou seu cupom 🐾", {
+          description: `Use ${result.coupon} no checkout — válido apenas uma vez por e-mail.`,
+        });
+      } else {
+        toast.success("Cupom de 10% liberado!", {
+          description: `Use ${result.coupon} no checkout. Enviamos os detalhes no seu e-mail.`,
+        });
+      }
       setEmail("");
     } finally {
       setLoading(false);
@@ -36,7 +44,7 @@ export function Newsletter() {
           Ganhe 10% OFF na primeira compra
         </h2>
         <p className="text-primary-foreground/85 mb-6 text-sm md:text-base">
-          Cadastre seu e-mail e receba o cupom + novidades, lançamentos e ofertas especiais.
+          Cadastre seu e-mail e receba o cupom. Limite de 1 cupom por e-mail.
         </p>
         <form onSubmit={submit} className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
           <div className="relative flex-1">
@@ -59,7 +67,7 @@ export function Newsletter() {
           </Button>
         </form>
         <p className="text-xs text-primary-foreground/70 mt-3">
-          Sem spam. Você pode cancelar quando quiser.
+          1 cupom por e-mail. Sem spam — cancele quando quiser.
         </p>
       </div>
     </section>
