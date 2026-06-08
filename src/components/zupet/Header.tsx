@@ -12,7 +12,7 @@ export function Header() {
         <div className="flex items-center justify-between gap-4 h-16 md:h-20">
           <Link to="/" className="flex items-center shrink-0" aria-label="Zupet">
             <img
-              src="/logo.png"
+              src="/zupet-logo.png"
               alt="Zupet — Premium Pet Shop"
               width={140}
               height={40}
