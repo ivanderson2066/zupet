@@ -19,6 +19,7 @@ import { Route as EnvioRouteImport } from './routes/envio'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductHandleRouteImport } from './routes/product.$handle'
+import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as ApiPublicClaimCouponRouteImport } from './routes/api/public/claim-coupon'
 
@@ -72,6 +73,11 @@ const ProductHandleRoute = ProductHandleRouteImport.update({
   path: '/product/$handle',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
+  id: '/checkout/success',
+  path: '/checkout/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
   id: '/categoria/$slug',
   path: '/categoria/$slug',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/termos': typeof TermosRoute
   '/trocas': typeof TrocasRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
 }
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/termos': typeof TermosRoute
   '/trocas': typeof TrocasRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
 }
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/termos': typeof TermosRoute
   '/trocas': typeof TrocasRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
 }
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/termos'
     | '/trocas'
     | '/categoria/$slug'
+    | '/checkout/success'
     | '/product/$handle'
     | '/api/public/claim-coupon'
   fileRoutesByTo: FileRoutesByTo
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/termos'
     | '/trocas'
     | '/categoria/$slug'
+    | '/checkout/success'
     | '/product/$handle'
     | '/api/public/claim-coupon'
   id:
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/termos'
     | '/trocas'
     | '/categoria/$slug'
+    | '/checkout/success'
     | '/product/$handle'
     | '/api/public/claim-coupon'
   fileRoutesById: FileRoutesById
@@ -182,6 +194,7 @@ export interface RootRouteChildren {
   TermosRoute: typeof TermosRoute
   TrocasRoute: typeof TrocasRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
+  CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   ProductHandleRoute: typeof ProductHandleRoute
   ApiPublicClaimCouponRoute: typeof ApiPublicClaimCouponRoute
 }
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductHandleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/success': {
+      id: '/checkout/success'
+      path: '/checkout/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof CheckoutSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categoria/$slug': {
       id: '/categoria/$slug'
       path: '/categoria/$slug'
@@ -286,19 +306,10 @@ const rootRouteChildren: RootRouteChildren = {
   TermosRoute: TermosRoute,
   TrocasRoute: TrocasRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
+  CheckoutSuccessRoute: CheckoutSuccessRoute,
   ProductHandleRoute: ProductHandleRoute,
   ApiPublicClaimCouponRoute: ApiPublicClaimCouponRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
