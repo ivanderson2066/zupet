@@ -20,6 +20,7 @@ import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductHandleRouteImport } from './routes/product.$handle'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as ApiPublicClaimCouponRouteImport } from './routes/api/public/claim-coupon'
 
 const TrocasRoute = TrocasRouteImport.update({
   id: '/trocas',
@@ -76,6 +77,11 @@ const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
   path: '/categoria/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicClaimCouponRoute = ApiPublicClaimCouponRouteImport.update({
+  id: '/api/public/claim-coupon',
+  path: '/api/public/claim-coupon',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/trocas': typeof TrocasRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/product/$handle': typeof ProductHandleRoute
+  '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/trocas': typeof TrocasRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/product/$handle': typeof ProductHandleRoute
+  '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/trocas': typeof TrocasRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/product/$handle': typeof ProductHandleRoute
+  '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/trocas'
     | '/categoria/$slug'
     | '/product/$handle'
+    | '/api/public/claim-coupon'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/trocas'
     | '/categoria/$slug'
     | '/product/$handle'
+    | '/api/public/claim-coupon'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/trocas'
     | '/categoria/$slug'
     | '/product/$handle'
+    | '/api/public/claim-coupon'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +183,7 @@ export interface RootRouteChildren {
   TrocasRoute: typeof TrocasRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
   ProductHandleRoute: typeof ProductHandleRoute
+  ApiPublicClaimCouponRoute: typeof ApiPublicClaimCouponRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoriaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/claim-coupon': {
+      id: '/api/public/claim-coupon'
+      path: '/api/public/claim-coupon'
+      fullPath: '/api/public/claim-coupon'
+      preLoaderRoute: typeof ApiPublicClaimCouponRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,6 +287,7 @@ const rootRouteChildren: RootRouteChildren = {
   TrocasRoute: TrocasRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
   ProductHandleRoute: ProductHandleRoute,
+  ApiPublicClaimCouponRoute: ApiPublicClaimCouponRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
