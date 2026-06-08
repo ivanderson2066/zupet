@@ -1,9 +1,9 @@
 [build]
   command = "bun run build"
-  publish = "dist/client"
+  publish = "dist"
 
 [build.environment]
   NITRO_PRESET = "netlify"
 
-# Sem regras de redirect SPA — o preset Nitro registra as Netlify Functions
-# automaticamente, mantendo SSR, server functions e rotas /api ativas.
+# Sem redirect SPA manual. O preset Nitro gera a função SSR e o fallback
+# correto para ela durante o build, mantendo rotas e /api ativos.

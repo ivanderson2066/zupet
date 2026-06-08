@@ -11,13 +11,14 @@ Clica em **Publish** no editor. Pronto — `https://zupet.lovable.app`. SSR, ser
 ## 🌐 Vercel
 
 1. Conecta o repo do GitHub na Vercel.
-2. Em **Project Settings → Environment Variables**, adiciona:
+2. Confirma que o **Framework Preset** está como `TanStack Start`.
+3. Em **Project Settings → Environment Variables**, adiciona:
    - `NITRO_PRESET` = `vercel`
-3. Em **Build & Development Settings**:
+4. Em **Build & Development Settings**:
    - Build Command: `bun run build` (ou `npm run build`)
-   - Output Directory: `.vercel/output` (deixa a Vercel detectar)
-4. Adiciona as suas variáveis do `.env` (Shopify, Meta Pixel, etc).
-5. Deploy.
+   - Output Directory: deixe a Vercel detectar pelo preset `TanStack Start`
+5. Adiciona as suas variáveis do `.env` (Shopify, Meta Pixel, etc).
+6. Deploy.
 
 > A Vercel detecta automaticamente o output Nitro. **Não** crie `vercel.json` com rewrites SPA — isso quebra o SSR.
 
@@ -29,7 +30,7 @@ Clica em **Publish** no editor. Pronto — `https://zupet.lovable.app`. SSR, ser
 2. Em **Site settings → Environment variables**:
    - `NITRO_PRESET` = `netlify`
 3. Build command: `bun run build`
-4. Publish directory: deixa em branco (o preset Nitro já configura).
+4. Publish directory: `dist`
 5. Adiciona suas variáveis de ambiente.
 6. Deploy.
 
@@ -100,4 +101,5 @@ Configure no painel do host que você escolher:
 Significa que o host está servindo só os arquivos estáticos sem o servidor Nitro. Confira:
 1. `NITRO_PRESET` está setado corretamente?
 2. O comando de build é `bun run build` (não `vite build --ssr false`)?
-3. O host está executando o output do servidor (`.output/server/`) e não só servindo `dist/` como estático?
+3. Na Vercel, o preset está como `TanStack Start`?
+4. Na Netlify, o publish directory está como `dist`?
