@@ -17,7 +17,7 @@ export function Header() {
               width={140}
               height={40}
               className="h-9 md:h-11 w-auto"
-            />
+            />      
           </Link>
 
           <nav className="hidden lg:flex items-center gap-7 text-sm font-medium">
