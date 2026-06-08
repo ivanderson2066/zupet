@@ -56,6 +56,16 @@ const CART_LINES_UPDATE = `mutation cartLinesUpdate($cartId: ID!, $lines: [CartL
 const CART_LINES_REMOVE = `mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
   cartLinesRemove(cartId: $cartId, lineIds: $lineIds) { cart { id } userErrors { field message } }
 }`;
+const CART_DISCOUNT_UPDATE = `mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]) {
+  cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+    cart {
+      id
+      discountCodes { code applicable }
+      cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
+    }
+    userErrors { field message }
+  }
+}`;
 
 function formatCheckoutUrl(url: string) {
   try {
@@ -130,6 +140,8 @@ export const useCartStore = create<CartStore>()(
       items: [],
       cartId: null,
       checkoutUrl: null,
+      appliedDiscount: null,
+      discountError: null,
       isLoading: false,
       isSyncing: false,
       isOpen: false,
@@ -224,8 +236,61 @@ export const useCartStore = create<CartStore>()(
         }
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
+      clearCart: () =>
+        set({ items: [], cartId: null, checkoutUrl: null, appliedDiscount: null, discountError: null }),
       getCheckoutUrl: () => get().checkoutUrl,
+
+      applyDiscount: async (code) => {
+        const { cartId } = get();
+        const clean = code.trim().toUpperCase();
+        if (!cartId || !clean) {
+          return { success: false, message: "Adicione produtos ao carrinho primeiro." };
+        }
+        set({ isLoading: true, discountError: null });
+        try {
+          const data = await storefrontApiRequest(CART_DISCOUNT_UPDATE, {
+            cartId,
+            discountCodes: [clean],
+          });
+          const errs = data?.data?.cartDiscountCodesUpdate?.userErrors || [];
+          if (errs.length) {
+            set({ discountError: errs[0].message });
+            return { success: false, message: errs[0].message };
+          }
+          const codes = data?.data?.cartDiscountCodesUpdate?.cart?.discountCodes || [];
+          const applied = codes.find(
+            (c: { code: string; applicable: boolean }) => c.code === clean && c.applicable,
+          );
+          if (!applied) {
+            const msg = "Cupom inválido ou não aplicável ao seu carrinho.";
+            set({ discountError: msg });
+            return { success: false, message: msg };
+          }
+          set({ appliedDiscount: clean, discountError: null });
+          return { success: true, message: `Cupom ${clean} aplicado!` };
+        } catch (e) {
+          console.error("applyDiscount failed", e);
+          const msg = "Erro ao aplicar o cupom. Tente novamente.";
+          set({ discountError: msg });
+          return { success: false, message: msg };
+        } finally {
+          set({ isLoading: false });
+        }
+      },
+
+      removeDiscount: async () => {
+        const { cartId } = get();
+        if (!cartId) return;
+        set({ isLoading: true });
+        try {
+          await storefrontApiRequest(CART_DISCOUNT_UPDATE, { cartId, discountCodes: [] });
+          set({ appliedDiscount: null, discountError: null });
+        } catch (e) {
+          console.error("removeDiscount failed", e);
+        } finally {
+          set({ isLoading: false });
+        }
+      },
 
       syncCart: async () => {
         const { cartId, isSyncing, clearCart } = get();
@@ -248,7 +313,12 @@ export const useCartStore = create<CartStore>()(
     {
       name: "zupet-cart",
       storage: createJSONStorage(() => localStorage),
-      partialize: (s) => ({ items: s.items, cartId: s.cartId, checkoutUrl: s.checkoutUrl }),
+      partialize: (s) => ({
+        items: s.items,
+        cartId: s.cartId,
+        checkoutUrl: s.checkoutUrl,
+        appliedDiscount: s.appliedDiscount,
+      }),
     },
   ),
 );
