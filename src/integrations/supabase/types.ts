@@ -14,7 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      coupon_claims: {
+        Row: {
+          coupon_code: string
+          created_at: string
+          email: string
+          id: string
+          source: string | null
+        }
+        Insert: {
+          coupon_code?: string
+          created_at?: string
+          email: string
+          id?: string
+          source?: string | null
+        }
+        Update: {
+          coupon_code?: string
+          created_at?: string
+          email?: string
+          id?: string
+          source?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
