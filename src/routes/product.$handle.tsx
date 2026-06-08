@@ -227,9 +227,7 @@ function ProductDetail({
             </span>
           </div>
 
-          {product.description && (
-            <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-          )}
+          {/* A descrição completa do produto é renderizada abaixo pelo bloco LuxuryDescription para evitar duplicação. */}
 
           <ul className="space-y-2">
             {bullets.map((b) => (
