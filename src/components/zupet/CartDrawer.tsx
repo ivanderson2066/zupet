@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -7,42 +7,115 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2, ShieldCheck } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  ShoppingBag,
+  Minus,
+  Plus,
+  Trash2,
+  ExternalLink,
+  Loader2,
+  ShieldCheck,
+  Tag,
+  X,
+  Mail,
+  Check,
+} from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
 import { trackInitiateCheckout } from "@/lib/pixel";
+import { saveAbandonedCart } from "@/lib/abandonedCart";
+import { toast } from "sonner";
 
 export function CartDrawer() {
   const isOpen = useCartStore((s) => s.isOpen);
   const setOpen = useCartStore((s) => s.setOpen);
   const items = useCartStore((s) => s.items);
+  const cartId = useCartStore((s) => s.cartId);
   const isLoading = useCartStore((s) => s.isLoading);
   const isSyncing = useCartStore((s) => s.isSyncing);
+  const appliedDiscount = useCartStore((s) => s.appliedDiscount);
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const removeItem = useCartStore((s) => s.removeItem);
   const getCheckoutUrl = useCartStore((s) => s.getCheckoutUrl);
   const syncCart = useCartStore((s) => s.syncCart);
+  const applyDiscount = useCartStore((s) => s.applyDiscount);
+  const removeDiscount = useCartStore((s) => s.removeDiscount);
+
+  const [couponInput, setCouponInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailSaved, setEmailSaved] = useState(false);
+  const [savingEmail, setSavingEmail] = useState(false);
 
   useEffect(() => {
     if (isOpen) syncCart();
   }, [isOpen, syncCart]);
 
+  useEffect(() => {
+    setEmailSaved(false);
+  }, [items.length]);
+
   const totalItems = items.reduce((a, b) => a + b.quantity, 0);
-  const totalPrice = items.reduce((a, b) => a + parseFloat(b.price.amount) * b.quantity, 0);
+  const subtotal = items.reduce((a, b) => a + parseFloat(b.price.amount) * b.quantity, 0);
   const currency = items[0]?.price.currencyCode || "BRL";
 
-  const checkout = () => {
-    const url = getCheckoutUrl();
-    if (url) {
-      trackInitiateCheckout({
-        content_ids: items.map((i) => i.variantId),
-        num_items: totalItems,
-        value: totalPrice,
-        currency,
-      });
-      window.open(url, "_blank");
-      setOpen(false);
+  const handleApplyCoupon = async () => {
+    if (!couponInput.trim()) return;
+    const r = await applyDiscount(couponInput);
+    if (r.success) {
+      toast.success(r.message);
+      setCouponInput("");
+    } else {
+      toast.error(r.message);
     }
+  };
+
+  const handleSaveEmail = async () => {
+    if (!email.includes("@") || !cartId) return;
+    const url = getCheckoutUrl();
+    if (!url) return;
+    setSavingEmail(true);
+    const ok = await saveAbandonedCart({
+      email,
+      cartId,
+      checkoutUrl: url,
+      totalAmount: subtotal,
+      currency,
+      itemsCount: totalItems,
+    });
+    setSavingEmail(false);
+    if (ok) {
+      setEmailSaved(true);
+      toast.success("Tudo certo! 💌", {
+        description: "Vamos guardar seu carrinho e te enviar um lembrete.",
+      });
+    } else {
+      toast.error("Não foi possível salvar agora. Tente novamente.");
+    }
+  };
+
+  const checkout = async () => {
+    const url = getCheckoutUrl();
+    if (!url) return;
+    // salva carrinho antes de ir pro checkout (se tiver email)
+    if (email.includes("@") && cartId && !emailSaved) {
+      await saveAbandonedCart({
+        email,
+        cartId,
+        checkoutUrl: url,
+        totalAmount: subtotal,
+        currency,
+        itemsCount: totalItems,
+      });
+    }
+    trackInitiateCheckout({
+      content_ids: items.map((i) => i.variantId),
+      num_items: totalItems,
+      value: subtotal,
+      currency,
+    });
+    window.open(url, "_blank");
+    setOpen(false);
   };
 
   return (
@@ -127,13 +200,94 @@ export function CartDrawer() {
                     </div>
                   ))}
                 </div>
+
+                {/* Cupom */}
+                <div className="mt-4 rounded-xl border border-border p-3 bg-background">
+                  <div className="flex items-center gap-2 text-sm font-semibold mb-2">
+                    <Tag className="h-4 w-4 text-primary" />
+                    Cupom de desconto
+                  </div>
+                  {appliedDiscount ? (
+                    <div className="flex items-center justify-between rounded-lg bg-primary/10 border border-primary/30 px-3 py-2">
+                      <div className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-primary" />
+                        <span className="font-bold text-primary text-sm">{appliedDiscount}</span>
+                        <span className="text-xs text-muted-foreground">aplicado</span>
+                      </div>
+                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={removeDiscount}>
+                        <X className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Ex: ZUPET10"
+                        value={couponInput}
+                        onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                        onKeyDown={(e) => e.key === "Enter" && handleApplyCoupon()}
+                        className="h-9 uppercase"
+                      />
+                      <Button
+                        size="sm"
+                        onClick={handleApplyCoupon}
+                        disabled={isLoading || !couponInput.trim()}
+                      >
+                        Aplicar
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Email para recuperação */}
+                {!emailSaved && (
+                  <div className="mt-3 rounded-xl border border-dashed border-border p-3 bg-secondary/30">
+                    <div className="flex items-center gap-2 text-sm font-semibold mb-1">
+                      <Mail className="h-4 w-4 text-primary" />
+                      Não perca seu carrinho
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Te enviamos um lembrete + cupom se você sair sem finalizar.
+                    </p>
+                    <div className="flex gap-2">
+                      <Input
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="h-9"
+                      />
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleSaveEmail}
+                        disabled={savingEmail || !email.includes("@")}
+                      >
+                        {savingEmail ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Salvar"}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {emailSaved && (
+                  <div className="mt-3 rounded-xl border border-success/30 bg-success/10 p-3 flex items-center gap-2">
+                    <Check className="h-4 w-4 text-success" />
+                    <span className="text-sm text-success-foreground">
+                      Carrinho salvo — relaxa que a gente te lembra 💛
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="flex-shrink-0 space-y-3 pt-4 border-t">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Subtotal</span>
-                  <span className="text-xl font-black">{formatPrice(totalPrice, currency)}</span>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="font-semibold">{formatPrice(subtotal, currency)}</span>
                 </div>
+                {appliedDiscount && (
+                  <div className="flex justify-between items-center text-sm text-primary">
+                    <span>Cupom {appliedDiscount}</span>
+                    <span className="font-semibold">aplicado no checkout</span>
+                  </div>
+                )}
                 <Button
                   onClick={checkout}
                   className="w-full h-12 bg-gradient-accent hover:opacity-95 text-accent-foreground font-bold rounded-xl shadow-glow"
@@ -149,7 +303,7 @@ export function CartDrawer() {
                 </Button>
                 <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
                   <ShieldCheck className="h-3.5 w-3.5 text-success" />
-                  Pagamento 100% seguro
+                  Pagamento 100% seguro · Frete em todo Brasil
                 </p>
               </div>
             </>

@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      abandoned_carts: {
+        Row: {
+          cart_id: string
+          checkout_url: string
+          created_at: string
+          currency: string | null
+          email: string
+          id: string
+          items_count: number | null
+          recovered_at: string | null
+          reminder_sent_at: string | null
+          total_amount: number | null
+          updated_at: string
+        }
+        Insert: {
+          cart_id: string
+          checkout_url: string
+          created_at?: string
+          currency?: string | null
+          email: string
+          id?: string
+          items_count?: number | null
+          recovered_at?: string | null
+          reminder_sent_at?: string | null
+          total_amount?: number | null
+          updated_at?: string
+        }
+        Update: {
+          cart_id?: string
+          checkout_url?: string
+          created_at?: string
+          currency?: string | null
+          email?: string
+          id?: string
+          items_count?: number | null
+          recovered_at?: string | null
+          reminder_sent_at?: string | null
+          total_amount?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       coupon_claims: {
         Row: {
           coupon_code: string
