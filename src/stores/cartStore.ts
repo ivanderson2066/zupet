@@ -21,6 +21,8 @@ interface CartStore {
   items: CartItem[];
   cartId: string | null;
   checkoutUrl: string | null;
+  appliedDiscount: string | null;
+  discountError: string | null;
   isLoading: boolean;
   isSyncing: boolean;
   isOpen: boolean;
@@ -28,6 +30,8 @@ interface CartStore {
   addItem: (item: Omit<CartItem, "lineId">) => Promise<void>;
   updateQuantity: (variantId: string, quantity: number) => Promise<void>;
   removeItem: (variantId: string) => Promise<void>;
+  applyDiscount: (code: string) => Promise<{ success: boolean; message: string }>;
+  removeDiscount: () => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
   getCheckoutUrl: () => string | null;
