@@ -21,6 +21,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductHandleRouteImport } from './routes/product.$handle'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as ApiPublicSaveAbandonedCartRouteImport } from './routes/api/public/save-abandoned-cart'
 import { Route as ApiPublicClaimCouponRouteImport } from './routes/api/public/claim-coupon'
 
 const TrocasRoute = TrocasRouteImport.update({
@@ -83,6 +84,12 @@ const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
   path: '/categoria/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicSaveAbandonedCartRoute =
+  ApiPublicSaveAbandonedCartRouteImport.update({
+    id: '/api/public/save-abandoned-cart',
+    path: '/api/public/save-abandoned-cart',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicClaimCouponRoute = ApiPublicClaimCouponRouteImport.update({
   id: '/api/public/claim-coupon',
   path: '/api/public/claim-coupon',
@@ -103,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/checkout/success': typeof CheckoutSuccessRoute
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
+  '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +126,7 @@ export interface FileRoutesByTo {
   '/checkout/success': typeof CheckoutSuccessRoute
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
+  '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +143,7 @@ export interface FileRoutesById {
   '/checkout/success': typeof CheckoutSuccessRoute
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
+  '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/checkout/success'
     | '/product/$handle'
     | '/api/public/claim-coupon'
+    | '/api/public/save-abandoned-cart'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/checkout/success'
     | '/product/$handle'
     | '/api/public/claim-coupon'
+    | '/api/public/save-abandoned-cart'
   id:
     | '__root__'
     | '/'
@@ -181,6 +193,7 @@ export interface FileRouteTypes {
     | '/checkout/success'
     | '/product/$handle'
     | '/api/public/claim-coupon'
+    | '/api/public/save-abandoned-cart'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +210,7 @@ export interface RootRouteChildren {
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   ProductHandleRoute: typeof ProductHandleRoute
   ApiPublicClaimCouponRoute: typeof ApiPublicClaimCouponRoute
+  ApiPublicSaveAbandonedCartRoute: typeof ApiPublicSaveAbandonedCartRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -285,6 +299,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoriaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/save-abandoned-cart': {
+      id: '/api/public/save-abandoned-cart'
+      path: '/api/public/save-abandoned-cart'
+      fullPath: '/api/public/save-abandoned-cart'
+      preLoaderRoute: typeof ApiPublicSaveAbandonedCartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/claim-coupon': {
       id: '/api/public/claim-coupon'
       path: '/api/public/claim-coupon'
@@ -309,7 +330,18 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutSuccessRoute: CheckoutSuccessRoute,
   ProductHandleRoute: ProductHandleRoute,
   ApiPublicClaimCouponRoute: ApiPublicClaimCouponRoute,
+  ApiPublicSaveAbandonedCartRoute: ApiPublicSaveAbandonedCartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
