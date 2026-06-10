@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as TrocasRouteImport } from './routes/trocas'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as SobreRouteImport } from './routes/sobre'
@@ -29,6 +30,11 @@ import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lova
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
+const UnsubscribeRoute = UnsubscribeRouteImport.update({
+  id: '/unsubscribe',
+  path: '/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrocasRoute = TrocasRouteImport.update({
   id: '/trocas',
   path: '/trocas',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/trocas': typeof TrocasRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
@@ -160,6 +167,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/trocas': typeof TrocasRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/trocas': typeof TrocasRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/trocas'
+    | '/unsubscribe'
     | '/categoria/$slug'
     | '/checkout/success'
     | '/email/unsubscribe'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/trocas'
+    | '/unsubscribe'
     | '/categoria/$slug'
     | '/checkout/success'
     | '/email/unsubscribe'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/trocas'
+    | '/unsubscribe'
     | '/categoria/$slug'
     | '/checkout/success'
     | '/email/unsubscribe'
@@ -269,6 +281,7 @@ export interface RootRouteChildren {
   SobreRoute: typeof SobreRoute
   TermosRoute: typeof TermosRoute
   TrocasRoute: typeof TrocasRoute
+  UnsubscribeRoute: typeof UnsubscribeRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
@@ -283,6 +296,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unsubscribe': {
+      id: '/unsubscribe'
+      path: '/unsubscribe'
+      fullPath: '/unsubscribe'
+      preLoaderRoute: typeof UnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trocas': {
       id: '/trocas'
       path: '/trocas'
@@ -429,6 +449,7 @@ const rootRouteChildren: RootRouteChildren = {
   SobreRoute: SobreRoute,
   TermosRoute: TermosRoute,
   TrocasRoute: TrocasRoute,
+  UnsubscribeRoute: UnsubscribeRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
@@ -443,3 +464,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
