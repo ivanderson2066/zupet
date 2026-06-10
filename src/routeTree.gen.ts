@@ -23,6 +23,7 @@ import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as ApiPublicSaveAbandonedCartRouteImport } from './routes/api/public/save-abandoned-cart'
 import { Route as ApiPublicClaimCouponRouteImport } from './routes/api/public/claim-coupon'
+import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
 const TrocasRoute = TrocasRouteImport.update({
   id: '/trocas',
@@ -95,6 +96,12 @@ const ApiPublicClaimCouponRoute = ApiPublicClaimCouponRouteImport.update({
   path: '/api/public/claim-coupon',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LovableEmailQueueProcessRoute =
+  LovableEmailQueueProcessRouteImport.update({
+    id: '/lovable/email/queue/process',
+    path: '/lovable/email/queue/process',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
   '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -127,6 +135,7 @@ export interface FileRoutesByTo {
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
   '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -144,6 +153,7 @@ export interface FileRoutesById {
   '/product/$handle': typeof ProductHandleRoute
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
   '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/product/$handle'
     | '/api/public/claim-coupon'
     | '/api/public/save-abandoned-cart'
+    | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/product/$handle'
     | '/api/public/claim-coupon'
     | '/api/public/save-abandoned-cart'
+    | '/lovable/email/queue/process'
   id:
     | '__root__'
     | '/'
@@ -194,6 +206,7 @@ export interface FileRouteTypes {
     | '/product/$handle'
     | '/api/public/claim-coupon'
     | '/api/public/save-abandoned-cart'
+    | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -211,6 +224,7 @@ export interface RootRouteChildren {
   ProductHandleRoute: typeof ProductHandleRoute
   ApiPublicClaimCouponRoute: typeof ApiPublicClaimCouponRoute
   ApiPublicSaveAbandonedCartRoute: typeof ApiPublicSaveAbandonedCartRoute
+  LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -313,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicClaimCouponRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lovable/email/queue/process': {
+      id: '/lovable/email/queue/process'
+      path: '/lovable/email/queue/process'
+      fullPath: '/lovable/email/queue/process'
+      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -331,17 +352,8 @@ const rootRouteChildren: RootRouteChildren = {
   ProductHandleRoute: ProductHandleRoute,
   ApiPublicClaimCouponRoute: ApiPublicClaimCouponRoute,
   ApiPublicSaveAbandonedCartRoute: ApiPublicSaveAbandonedCartRoute,
+  LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
