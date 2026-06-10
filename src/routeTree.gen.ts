@@ -29,6 +29,7 @@ import { Route as ApiPublicClaimCouponRouteImport } from './routes/api/public/cl
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
+import { Route as ApiPublicCronAbandonedCartRouteImport } from './routes/api/public/cron/abandoned-cart'
 
 const UnsubscribeRoute = UnsubscribeRouteImport.update({
   id: '/unsubscribe',
@@ -134,6 +135,12 @@ const LovableEmailQueueProcessRoute =
     path: '/lovable/email/queue/process',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicCronAbandonedCartRoute =
+  ApiPublicCronAbandonedCartRouteImport.update({
+    id: '/api/public/cron/abandoned-cart',
+    path: '/api/public/cron/abandoned-cart',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
   '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/cron/abandoned-cart': typeof ApiPublicCronAbandonedCartRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
@@ -175,6 +183,7 @@ export interface FileRoutesByTo {
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
   '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/cron/abandoned-cart': typeof ApiPublicCronAbandonedCartRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
@@ -198,6 +207,7 @@ export interface FileRoutesById {
   '/api/public/claim-coupon': typeof ApiPublicClaimCouponRoute
   '/api/public/save-abandoned-cart': typeof ApiPublicSaveAbandonedCartRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/cron/abandoned-cart': typeof ApiPublicCronAbandonedCartRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
@@ -222,6 +232,7 @@ export interface FileRouteTypes {
     | '/api/public/claim-coupon'
     | '/api/public/save-abandoned-cart'
     | '/lovable/email/suppression'
+    | '/api/public/cron/abandoned-cart'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
@@ -244,6 +255,7 @@ export interface FileRouteTypes {
     | '/api/public/claim-coupon'
     | '/api/public/save-abandoned-cart'
     | '/lovable/email/suppression'
+    | '/api/public/cron/abandoned-cart'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
@@ -266,6 +278,7 @@ export interface FileRouteTypes {
     | '/api/public/claim-coupon'
     | '/api/public/save-abandoned-cart'
     | '/lovable/email/suppression'
+    | '/api/public/cron/abandoned-cart'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
@@ -289,6 +302,7 @@ export interface RootRouteChildren {
   ApiPublicClaimCouponRoute: typeof ApiPublicClaimCouponRoute
   ApiPublicSaveAbandonedCartRoute: typeof ApiPublicSaveAbandonedCartRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
+  ApiPublicCronAbandonedCartRoute: typeof ApiPublicCronAbandonedCartRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
   LovableEmailTransactionalSendRoute: typeof LovableEmailTransactionalSendRoute
@@ -436,6 +450,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/cron/abandoned-cart': {
+      id: '/api/public/cron/abandoned-cart'
+      path: '/api/public/cron/abandoned-cart'
+      fullPath: '/api/public/cron/abandoned-cart'
+      preLoaderRoute: typeof ApiPublicCronAbandonedCartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -457,6 +478,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicClaimCouponRoute: ApiPublicClaimCouponRoute,
   ApiPublicSaveAbandonedCartRoute: ApiPublicSaveAbandonedCartRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
+  ApiPublicCronAbandonedCartRoute: ApiPublicCronAbandonedCartRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
   LovableEmailTransactionalSendRoute: LovableEmailTransactionalSendRoute,
@@ -464,3 +486,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
