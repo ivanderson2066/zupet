@@ -19,6 +19,141 @@ interface LuxuryDescriptionProps {
 }
 
 /**
+ * Parse Shopify plain-text description into stylized blocks:
+ * - paragraphs, bullet lists (-, •, *, –)
+ * - section headers (ALL CAPS lines or lines ending with ":")
+ * - key-value lines ("Material: ...")
+ */
+function FormattedDescription({ text }: { text: string }) {
+  const clean = text.replace(/\r\n/g, "\n").trim();
+  if (!clean) return null;
+
+  // Split into blocks separated by blank lines
+  const blocks = clean.split(/\n{2,}/);
+
+  type Block =
+    | { type: "h"; text: string }
+    | { type: "p"; text: string }
+    | { type: "ul"; items: string[] }
+    | { type: "kv"; items: [string, string][] };
+
+  const parsed: Block[] = [];
+
+  for (const raw of blocks) {
+    const lines = raw.split("\n").map((l) => l.trim()).filter(Boolean);
+    if (lines.length === 0) continue;
+
+    const bulletRe = /^[-•*–—]\s+(.+)/;
+    const kvRe = /^([A-Za-zÀ-ÿ0-9 /+&()-]{2,40}):\s+(.+)/;
+
+    // All bullet lines → list
+    if (lines.every((l) => bulletRe.test(l))) {
+      parsed.push({ type: "ul", items: lines.map((l) => l.replace(bulletRe, "$1")) });
+      continue;
+    }
+
+    // All key:value lines → spec table
+    if (lines.length >= 2 && lines.every((l) => kvRe.test(l))) {
+      parsed.push({
+        type: "kv",
+        items: lines.map((l) => {
+          const m = l.match(kvRe)!;
+          return [m[1], m[2]] as [string, string];
+        }),
+      });
+      continue;
+    }
+
+    // Single short line, looks like heading
+    if (
+      lines.length === 1 &&
+      (lines[0].length < 60) &&
+      (lines[0] === lines[0].toUpperCase() || /:$/.test(lines[0]))
+    ) {
+      parsed.push({ type: "h", text: lines[0].replace(/:$/, "") });
+      continue;
+    }
+
+    // First line is heading, rest paragraph?
+    if (lines.length > 1 && /:$/.test(lines[0]) && lines[0].length < 60) {
+      parsed.push({ type: "h", text: lines[0].replace(/:$/, "") });
+      parsed.push({ type: "p", text: lines.slice(1).join(" ") });
+      continue;
+    }
+
+    // Mixed bullets within paragraph — extract bullets
+    const bulletLines = lines.filter((l) => bulletRe.test(l));
+    const proseLines = lines.filter((l) => !bulletRe.test(l));
+    if (bulletLines.length > 0 && proseLines.length > 0) {
+      parsed.push({ type: "p", text: proseLines.join(" ") });
+      parsed.push({ type: "ul", items: bulletLines.map((l) => l.replace(bulletRe, "$1")) });
+      continue;
+    }
+
+    parsed.push({ type: "p", text: lines.join(" ") });
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto text-left space-y-5">
+      {parsed.map((b, i) => {
+        if (b.type === "h") {
+          return (
+            <h4
+              key={i}
+              className="text-sm font-black uppercase tracking-[0.18em] text-primary pt-2"
+            >
+              {b.text}
+            </h4>
+          );
+        }
+        if (b.type === "p") {
+          return (
+            <p
+              key={i}
+              className="text-base md:text-lg text-muted-foreground leading-relaxed"
+            >
+              {b.text}
+            </p>
+          );
+        }
+        if (b.type === "ul") {
+          return (
+            <ul key={i} className="space-y-2.5">
+              {b.items.map((it, j) => (
+                <li
+                  key={j}
+                  className="flex items-start gap-3 text-base text-foreground/90 leading-relaxed"
+                >
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+          );
+        }
+        // kv
+        return (
+          <dl
+            key={i}
+            className="grid grid-cols-1 sm:grid-cols-[max-content_1fr] gap-x-6 gap-y-2.5 rounded-2xl border border-border bg-muted/30 p-5"
+          >
+            {b.items.map(([k, v], j) => (
+              <div key={j} className="contents">
+                <dt className="text-[11px] font-black uppercase tracking-widest text-muted-foreground self-center">
+                  {k}
+                </dt>
+                <dd className="text-sm text-foreground leading-relaxed">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        );
+      })}
+    </div>
+  );
+}
+
+
+/**
  * Premium product storytelling block — inspirado em Aesop, Apple e Allbirds.
  * Tipografia editorial, micro-interações suaves, alta densidade de prova social.
  */
@@ -45,9 +180,7 @@ export function LuxuryDescription({ title, description }: LuxuryDescriptionProps
             </span>
           </h2>
           {description ? (
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed whitespace-pre-line max-w-2xl mx-auto">
-              {description}
-            </p>
+            <FormattedDescription text={description} />
           ) : (
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               <span className="font-semibold text-foreground">{title}</span> chegou na Zupet depois
