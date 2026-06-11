@@ -1,11 +1,20 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Search, MessageCircle, Menu } from "lucide-react";
+import { Search, MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 import { CartButton } from "./CartButton";
-import logoAsset from "@/assets/zupet-logo.png.asset.json";
 
 export function Header() {
+  const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-xl border-b border-border">
       <div className="container mx-auto px-4">
@@ -17,7 +26,7 @@ export function Header() {
               width={140}
               height={40}
               className="h-9 md:h-11 w-auto"
-            />      
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-7 text-sm font-medium">
@@ -46,9 +55,49 @@ export function Header() {
               </a>
             </Button>
             <CartButton />
-            <Button variant="ghost" size="icon" className="lg:hidden">
-              <Menu className="h-5 w-5" />
-            </Button>
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menu">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[85vw] sm:w-80 p-0">
+                <SheetHeader className="px-5 pt-5 pb-3 border-b">
+                  <SheetTitle className="text-left">Menu</SheetTitle>
+                </SheetHeader>
+                <div className="p-5 flex flex-col gap-1">
+                  <SheetClose asChild>
+                    <Link to="/" className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Início</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/categoria/$slug" params={{ slug: "caes" }} className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Cães</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/categoria/$slug" params={{ slug: "gatos" }} className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Gatos</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/categoria/$slug" params={{ slug: "brinquedos" }} className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Brinquedos</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/categoria/$slug" params={{ slug: "tecnologia" }} className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Tech Pet</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/sobre" className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Sobre</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/contato" className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Contato</Link>
+                  </SheetClose>
+                  <div className="mt-4 pt-4 border-t">
+                    <Button asChild className="w-full bg-success hover:bg-success/90 text-success-foreground rounded-full font-semibold">
+                      <a href="https://wa.me/5598991891675" target="_blank" rel="noopener noreferrer">
+                        <MessageCircle className="h-4 w-4 mr-1.5" />
+                        Falar no WhatsApp
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
