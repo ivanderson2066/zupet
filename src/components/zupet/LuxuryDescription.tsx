@@ -45,9 +45,7 @@ export function LuxuryDescription({ title, description }: LuxuryDescriptionProps
             </span>
           </h2>
           {description ? (
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed whitespace-pre-line max-w-2xl mx-auto">
-              {description}
-            </p>
+            <FormattedDescription text={description} />
           ) : (
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               <span className="font-semibold text-foreground">{title}</span> chegou na Zupet depois
