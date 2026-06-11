@@ -152,9 +152,6 @@ function FormattedDescription({ text }: { text: string }) {
   );
 }
 
-interface LuxuryDescriptionPropsUnused {
-  _ignored?: never;
-}
 
 /**
  * Premium product storytelling block — inspirado em Aesop, Apple e Allbirds.
