@@ -13,7 +13,7 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
   const isLoading = useCartStore((s) => s.isLoading);
   const currency = variant?.price.currencyCode || p.priceRange.minVariantPrice.currencyCode;
   const price = parseFloat(variant?.price.amount || p.priceRange.minVariantPrice.amount);
-  const fakeOriginal = price > 0 ? price * 1.4 : 0;
+  
 
   const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -59,11 +59,6 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
         </h3>
         <div className="mt-auto pt-2 space-y-2">
           <div className="flex items-baseline gap-2">
-            {fakeOriginal > 0 && (
-              <span className="text-xs text-muted-foreground line-through">
-                {formatPrice(fakeOriginal, currency)}
-              </span>
-            )}
             <span className="text-lg font-black text-primary">
               {formatPrice(price, currency)}
             </span>
