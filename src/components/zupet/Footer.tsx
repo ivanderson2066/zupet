@@ -8,12 +8,15 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-5 gap-10 mb-10">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-10 w-10 rounded-xl bg-gradient-brand grid place-items-center shadow-soft">
-                <span className="text-primary-foreground font-black text-lg">Z</span>
-              </div>
-              <span className="text-xl font-black">Zupet</span>
-            </div>
+            <Link to="/" className="inline-flex items-center mb-4" aria-label="Zupet">
+              <img
+                src="/zupet-logo.png"
+                alt="Zupet — Premium Pet Shop"
+                width={160}
+                height={44}
+                className="h-11 w-auto brightness-0 invert"
+              />
+            </Link>
             <p className="text-background/70 max-w-md mb-4">
               Seu pet mais feliz todos os dias. Produtos inteligentes, divertidos e inovadores para
               cães e gatos.
