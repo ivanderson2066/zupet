@@ -326,8 +326,8 @@ export function LuxuryDescription({ title, description }: LuxuryDescriptionProps
             </p>
             <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto">
               {[
-                { icon: Award, label: "Qualidade premium" },
-                { icon: Heart, label: "+12 mil pets felizes" },
+                { icon: Award, label: "Curadoria premium" },
+                { icon: Heart, label: "Feito para pets reais" },
                 { icon: Gift, label: "Embalagem presente" },
               ].map((b) => (
                 <div
