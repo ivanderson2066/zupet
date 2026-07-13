@@ -52,6 +52,7 @@ function Index() {
         <ProblemSolution />
         <VideoShowcase />
         <UrgencySection />
+        <GuaranteeBadges />
         <TrustSection />
         <Reviews />
         <FAQ />
