@@ -7,6 +7,7 @@ import { Benefits } from "@/components/zupet/Benefits";
 import { BestSellers } from "@/components/zupet/BestSellers";
 import { CategoriesGrid } from "@/components/zupet/CategoriesGrid";
 import { ProblemSolution } from "@/components/zupet/ProblemSolution";
+import { GuaranteeBadges } from "@/components/zupet/GuaranteeBadges";
 import { VideoShowcase } from "@/components/zupet/VideoShowcase";
 import { TrustSection } from "@/components/zupet/TrustSection";
 import { UrgencySection } from "@/components/zupet/UrgencySection";
@@ -51,6 +52,7 @@ function Index() {
         <ProblemSolution />
         <VideoShowcase />
         <UrgencySection />
+        <GuaranteeBadges />
         <TrustSection />
         <Reviews />
         <FAQ />
