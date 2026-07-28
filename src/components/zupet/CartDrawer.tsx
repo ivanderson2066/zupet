@@ -51,9 +51,16 @@ export function CartDrawer() {
     if (isOpen) syncCart();
   }, [isOpen, syncCart]);
 
+  // Reaproveita o e-mail já informado no cupom/newsletter para a recuperação de carrinho.
+  useEffect(() => {
+    const saved = getSavedEmail();
+    if (saved) setEmail((cur) => cur || saved);
+  }, [isOpen]);
+
   useEffect(() => {
     setEmailSaved(false);
   }, [items.length]);
+
 
   const totalItems = items.reduce((a, b) => a + b.quantity, 0);
   const subtotal = items.reduce((a, b) => a + parseFloat(b.price.amount) * b.quantity, 0);
