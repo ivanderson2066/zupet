@@ -58,10 +58,16 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
           {p.title}
         </h3>
         <div className="mt-auto pt-2 space-y-2">
-          <div className="flex items-baseline gap-2">
-            <span className="text-lg font-black text-primary">
+          <div className="space-y-0.5">
+            <span className="text-lg font-black text-primary block">
               {formatPrice(price, currency)}
             </span>
+            <span className="text-[11px] text-muted-foreground block">
+              ou {installments.count}x de {formatPrice(installments.value, currency)}
+            </span>
+            {hasFreeShipping(price) && (
+              <span className="text-[11px] font-bold text-success block">Frete grátis 🚚</span>
+            )}
           </div>
           <Button
             onClick={handleAdd}
