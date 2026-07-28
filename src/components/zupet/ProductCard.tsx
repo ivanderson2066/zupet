@@ -14,7 +14,8 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
   const isLoading = useCartStore((s) => s.isLoading);
   const currency = variant?.price.currencyCode || p.priceRange.minVariantPrice.currencyCode;
   const price = parseFloat(variant?.price.amount || p.priceRange.minVariantPrice.amount);
-  
+  const installments = installmentsFor(price);
+
 
   const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
