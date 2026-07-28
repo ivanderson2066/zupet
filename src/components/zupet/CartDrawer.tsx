@@ -93,8 +93,9 @@ export function CartDrawer() {
     });
     setSavingEmail(false);
     if (ok) {
+      rememberEmail(email);
       setEmailSaved(true);
-      toast.success("Tudo certo! 💌", {
+
         description: "Vamos guardar seu carrinho e te enviar um lembrete.",
       });
     } else {
