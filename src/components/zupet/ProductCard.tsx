@@ -3,6 +3,7 @@ import { ShoppingBag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
+import { installmentsFor, hasFreeShipping } from "@/lib/pricing";
 import { useCartStore } from "@/stores/cartStore";
 
 export function ProductCard({ product }: { product: ShopifyProduct }) {
@@ -13,7 +14,8 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
   const isLoading = useCartStore((s) => s.isLoading);
   const currency = variant?.price.currencyCode || p.priceRange.minVariantPrice.currencyCode;
   const price = parseFloat(variant?.price.amount || p.priceRange.minVariantPrice.amount);
-  
+  const installments = installmentsFor(price);
+
 
   const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -58,10 +60,16 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
           {p.title}
         </h3>
         <div className="mt-auto pt-2 space-y-2">
-          <div className="flex items-baseline gap-2">
-            <span className="text-lg font-black text-primary">
+          <div className="space-y-0.5">
+            <span className="text-lg font-black text-primary block">
               {formatPrice(price, currency)}
             </span>
+            <span className="text-[11px] text-muted-foreground block">
+              ou {installments.count}x de {formatPrice(installments.value, currency)}
+            </span>
+            {hasFreeShipping(price) && (
+              <span className="text-[11px] font-bold text-success block">Frete grátis 🚚</span>
+            )}
           </div>
           <Button
             onClick={handleAdd}

@@ -23,6 +23,9 @@ import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { BestSellers } from "@/components/zupet/BestSellers";
 import { LuxuryDescription } from "@/components/zupet/LuxuryDescription";
+import { PaymentOptions } from "@/components/zupet/PaymentOptions";
+import { DeliveryEstimate } from "@/components/zupet/DeliveryEstimate";
+import { installmentsFor } from "@/lib/pricing";
 import {
   storefrontApiRequest,
   PRODUCT_BY_HANDLE_QUERY,
@@ -181,7 +184,7 @@ function ProductDetail({
   const variant = product.variants.edges[0]?.node;
   const currency = variant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode;
   const price = parseFloat(variant?.price.amount || product.priceRange.minVariantPrice.amount);
-  const original = price * 1.4;
+  const installments = installmentsFor(price);
 
   return (
     <>
@@ -218,16 +221,20 @@ function ProductDetail({
         <div className="space-y-5">
           <h1 className="text-3xl md:text-4xl font-black tracking-tight">{product.title}</h1>
 
-          <div className="flex items-baseline gap-3">
-            <span className="text-sm text-muted-foreground line-through">
-              {formatPrice(original, currency)}
-            </span>
-            <span className="text-3xl md:text-4xl font-black text-primary">
+          <div className="space-y-1">
+            <span className="text-3xl md:text-4xl font-black text-primary block">
               {formatPrice(price, currency)}
+            </span>
+            <span className="text-sm text-muted-foreground block">
+              ou {installments.count}x de {formatPrice(installments.value, currency)} sem juros
             </span>
           </div>
 
+          <PaymentOptions price={price} currency={currency} />
+          <DeliveryEstimate price={price} />
+
           {/* A descrição completa do produto é renderizada abaixo pelo bloco LuxuryDescription para evitar duplicação. */}
+
 
           <ul className="space-y-2">
             {bullets.map((b) => (
@@ -292,14 +299,15 @@ function ProductDetail({
       {/* Sticky mobile buy bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-xl border-t border-border p-3 shadow-card">
         <div className="flex items-center gap-3">
-          <div className="flex flex-col leading-none">
-            <span className="text-[10px] text-muted-foreground line-through">
-              {formatPrice(original, currency)}
-            </span>
+          <div className="flex flex-col leading-none gap-0.5">
             <span className="text-lg font-black text-primary">
               {formatPrice(price, currency)}
             </span>
+            <span className="text-[10px] text-muted-foreground">
+              {installments.count}x de {formatPrice(installments.value, currency)}
+            </span>
           </div>
+
           <Button
             onClick={onAdd}
             disabled={isLoading || !variant?.availableForSale}
