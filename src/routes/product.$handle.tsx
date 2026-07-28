@@ -181,7 +181,7 @@ function ProductDetail({
   const variant = product.variants.edges[0]?.node;
   const currency = variant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode;
   const price = parseFloat(variant?.price.amount || product.priceRange.minVariantPrice.amount);
-  const original = price * 1.4;
+  const installments = installmentsFor(price);
 
   return (
     <>
