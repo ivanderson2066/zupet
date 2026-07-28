@@ -25,6 +25,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
 import { trackInitiateCheckout } from "@/lib/pixel";
 import { saveAbandonedCart } from "@/lib/abandonedCart";
+import { getSavedEmail, rememberEmail } from "@/lib/claimCoupon";
 import { toast } from "sonner";
 
 export function CartDrawer() {
@@ -51,9 +52,16 @@ export function CartDrawer() {
     if (isOpen) syncCart();
   }, [isOpen, syncCart]);
 
+  // Reaproveita o e-mail já informado no cupom/newsletter para a recuperação de carrinho.
+  useEffect(() => {
+    const saved = getSavedEmail();
+    if (saved) setEmail((cur) => cur || saved);
+  }, [isOpen]);
+
   useEffect(() => {
     setEmailSaved(false);
   }, [items.length]);
+
 
   const totalItems = items.reduce((a, b) => a + b.quantity, 0);
   const subtotal = items.reduce((a, b) => a + parseFloat(b.price.amount) * b.quantity, 0);
@@ -85,9 +93,11 @@ export function CartDrawer() {
     });
     setSavingEmail(false);
     if (ok) {
+      rememberEmail(email);
       setEmailSaved(true);
       toast.success("Tudo certo! 💌", {
         description: "Vamos guardar seu carrinho e te enviar um lembrete.",
+
       });
     } else {
       toast.error("Não foi possível salvar agora. Tente novamente.");
