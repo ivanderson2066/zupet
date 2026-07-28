@@ -218,16 +218,20 @@ function ProductDetail({
         <div className="space-y-5">
           <h1 className="text-3xl md:text-4xl font-black tracking-tight">{product.title}</h1>
 
-          <div className="flex items-baseline gap-3">
-            <span className="text-sm text-muted-foreground line-through">
-              {formatPrice(original, currency)}
-            </span>
-            <span className="text-3xl md:text-4xl font-black text-primary">
+          <div className="space-y-1">
+            <span className="text-3xl md:text-4xl font-black text-primary block">
               {formatPrice(price, currency)}
+            </span>
+            <span className="text-sm text-muted-foreground block">
+              ou {installments.count}x de {formatPrice(installments.value, currency)} sem juros
             </span>
           </div>
 
+          <PaymentOptions price={price} currency={currency} />
+          <DeliveryEstimate price={price} />
+
           {/* A descrição completa do produto é renderizada abaixo pelo bloco LuxuryDescription para evitar duplicação. */}
+
 
           <ul className="space-y-2">
             {bullets.map((b) => (
