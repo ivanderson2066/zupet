@@ -3,6 +3,7 @@ import { ShoppingBag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
+import { installmentsFor, hasFreeShipping } from "@/lib/pricing";
 import { useCartStore } from "@/stores/cartStore";
 
 export function ProductCard({ product }: { product: ShopifyProduct }) {
