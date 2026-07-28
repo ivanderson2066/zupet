@@ -23,6 +23,9 @@ import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { BestSellers } from "@/components/zupet/BestSellers";
 import { LuxuryDescription } from "@/components/zupet/LuxuryDescription";
+import { PaymentOptions } from "@/components/zupet/PaymentOptions";
+import { DeliveryEstimate } from "@/components/zupet/DeliveryEstimate";
+import { installmentsFor } from "@/lib/pricing";
 import {
   storefrontApiRequest,
   PRODUCT_BY_HANDLE_QUERY,
