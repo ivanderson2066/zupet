@@ -6,6 +6,7 @@ export interface ClaimCouponResult {
 }
 
 export async function claimCoupon(email: string, source: string): Promise<ClaimCouponResult> {
+  rememberEmail(email);
   try {
     const res = await fetch("/api/public/claim-coupon", {
       method: "POST",
@@ -19,5 +20,26 @@ export async function claimCoupon(email: string, source: string): Promise<ClaimC
     return data;
   } catch {
     return { alreadyClaimed: false, error: "Falha de conexão" };
+  }
+}
+
+const EMAIL_KEY = "zupet-lead-email";
+
+export function rememberEmail(email: string) {
+  try {
+    if (typeof window !== "undefined" && email.includes("@")) {
+      localStorage.setItem(EMAIL_KEY, email);
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+export function getSavedEmail(): string {
+  try {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem(EMAIL_KEY) || "";
+  } catch {
+    return "";
   }
 }
