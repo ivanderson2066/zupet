@@ -95,8 +95,9 @@ export function CartDrawer() {
     if (ok) {
       rememberEmail(email);
       setEmailSaved(true);
-
+      toast.success("Tudo certo! 💌", {
         description: "Vamos guardar seu carrinho e te enviar um lembrete.",
+
       });
     } else {
       toast.error("Não foi possível salvar agora. Tente novamente.");
