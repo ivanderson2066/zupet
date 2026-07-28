@@ -292,14 +292,15 @@ function ProductDetail({
       {/* Sticky mobile buy bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-xl border-t border-border p-3 shadow-card">
         <div className="flex items-center gap-3">
-          <div className="flex flex-col leading-none">
-            <span className="text-[10px] text-muted-foreground line-through">
-              {formatPrice(original, currency)}
-            </span>
+          <div className="flex flex-col leading-none gap-0.5">
             <span className="text-lg font-black text-primary">
               {formatPrice(price, currency)}
             </span>
+            <span className="text-[10px] text-muted-foreground">
+              {installments.count}x de {formatPrice(installments.value, currency)}
+            </span>
           </div>
+
           <Button
             onClick={onAdd}
             disabled={isLoading || !variant?.availableForSale}
