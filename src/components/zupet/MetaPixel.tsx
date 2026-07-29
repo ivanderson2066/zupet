@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 
-const PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
+// ID público do Pixel da Meta (pode ficar no código; não é segredo).
+const PIXEL_ID =
+  (import.meta.env.VITE_META_PIXEL_ID as string | undefined) || "3403406819797536";
 
 export function MetaPixel() {
   useEffect(() => {
