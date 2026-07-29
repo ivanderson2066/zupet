@@ -13,6 +13,7 @@ import { TrustSection } from "@/components/zupet/TrustSection";
 import { UrgencySection } from "@/components/zupet/UrgencySection";
 import { FAQ } from "@/components/zupet/FAQ";
 import { Reviews } from "@/components/zupet/Reviews";
+import { MockReviews } from "@/components/zupet/MockReviews";
 import { Newsletter } from "@/components/zupet/Newsletter";
 import { Footer } from "@/components/zupet/Footer";
 
@@ -54,6 +55,7 @@ function Index() {
         <UrgencySection />
         <GuaranteeBadges />
         <TrustSection />
+        <MockReviews />
         <Reviews />
         <FAQ />
         <Newsletter />
