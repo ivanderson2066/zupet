@@ -152,6 +152,14 @@ function SuccessPage() {
               </div>
             </div>
 
+            {/* Avaliação pós-compra */}
+            <div className="mb-8">
+              <h2 className="text-xl font-bold mb-4 text-center">
+                Já recebeu? Avalie e ajude outros tutores 🐾
+              </h2>
+              <ReviewForm orderRef={order} />
+            </div>
+
             {/* Cupom de recompra */}
             <div className="relative rounded-2xl border-2 border-dashed border-primary/40 bg-gradient-to-br from-primary/5 to-accent/5 p-6 mb-8 text-center overflow-hidden">
               <Gift className="absolute -top-4 -right-4 w-20 h-20 text-primary/10" />
