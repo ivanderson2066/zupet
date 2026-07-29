@@ -167,6 +167,45 @@ export type Database = {
         }
         Relationships: []
       }
+      product_reviews: {
+        Row: {
+          approved: boolean
+          author_name: string
+          body: string | null
+          created_at: string
+          id: string
+          order_ref: string | null
+          photo_url: string | null
+          product_handle: string | null
+          rating: number
+          title: string | null
+        }
+        Insert: {
+          approved?: boolean
+          author_name: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          order_ref?: string | null
+          photo_url?: string | null
+          product_handle?: string | null
+          rating: number
+          title?: string | null
+        }
+        Update: {
+          approved?: boolean
+          author_name?: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          order_ref?: string | null
+          photo_url?: string | null
+          product_handle?: string | null
+          rating?: number
+          title?: string | null
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
