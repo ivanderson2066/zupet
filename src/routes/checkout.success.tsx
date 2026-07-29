@@ -18,6 +18,7 @@ import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
+import { ReviewForm } from "@/components/zupet/ReviewForm";
 
 const NEXT_COUPON = "ZUVOLTA15";
 
