@@ -18,6 +18,7 @@ import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
+import { ReviewForm } from "@/components/zupet/ReviewForm";
 
 const NEXT_COUPON = "ZUVOLTA15";
 
@@ -150,6 +151,14 @@ function SuccessPage() {
                   Hora da alegria! Marca a gente no Insta 📸
                 </p>
               </div>
+            </div>
+
+            {/* Avaliação pós-compra */}
+            <div className="mb-8">
+              <h2 className="text-xl font-bold mb-4 text-center">
+                Já recebeu? Avalie e ajude outros tutores 🐾
+              </h2>
+              <ReviewForm orderRef={order} />
             </div>
 
             {/* Cupom de recompra */}
