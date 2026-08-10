@@ -12,7 +12,7 @@ import { VideoShowcase } from "@/components/zupet/VideoShowcase";
 import { TrustSection } from "@/components/zupet/TrustSection";
 import { UrgencySection } from "@/components/zupet/UrgencySection";
 import { FAQ } from "@/components/zupet/FAQ";
-import { Reviews } from "@/components/zupet/Reviews";
+// Judge.me (Reviews) fica oculto até existirem avaliações reais publicadas.
 import { MockReviews } from "@/components/zupet/MockReviews";
 import { Newsletter } from "@/components/zupet/Newsletter";
 import { Footer } from "@/components/zupet/Footer";
@@ -56,7 +56,6 @@ function Index() {
         <GuaranteeBadges />
         <TrustSection />
         <MockReviews />
-        <Reviews />
         <FAQ />
         <Newsletter />
       </main>
