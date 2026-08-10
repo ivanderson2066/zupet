@@ -120,6 +120,8 @@ export function MockReviews({
               </div>
             </>
           )}
+        </div>
+
 
         <div
           className={`grid gap-5 ${
