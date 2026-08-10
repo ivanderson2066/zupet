@@ -103,11 +103,23 @@ export function MockReviews({
             O que dizem sobre a Zupet
           </h2>
           {!compact && (
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Histórias de tutores que transformaram a rotina dos seus pets.
-            </p>
+            <>
+              <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
+                Histórias de tutores que transformaram a rotina dos seus pets.
+              </p>
+              <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-border bg-card px-5 py-3 shadow-sm">
+                <span className="text-3xl font-black leading-none">4,8</span>
+                <Stars rating={5} />
+                <span className="text-xs text-muted-foreground">
+                  média das avaliações exibidas
+                </span>
+                <span className="hidden sm:inline h-4 w-px bg-border" />
+                <span className="flex items-center gap-1 text-xs font-semibold text-success">
+                  <BadgeCheck className="h-3.5 w-3.5" /> 7 dias para trocar ou devolver
+                </span>
+              </div>
+            </>
           )}
-        </div>
 
         <div
           className={`grid gap-5 ${
