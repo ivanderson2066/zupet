@@ -42,7 +42,8 @@ export const Route = createFileRoute("/categoria/$slug")({
 });
 
 function CategoryPage() {
-  const { category } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const category = getCategoryBySlug(slug)!;
   const { data, isLoading } = useQuery({
     queryKey: ["products", "category", category.slug],
     queryFn: async () => {
