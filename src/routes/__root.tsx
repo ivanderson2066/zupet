@@ -15,8 +15,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { CartDrawer } from "@/components/zupet/CartDrawer";
 import { MetaPixel } from "@/components/zupet/MetaPixel";
 import { WhatsAppButton } from "@/components/zupet/WhatsAppButton";
-import { FreeShippingBar } from "@/components/zupet/FreeShippingBar";
-import { CountdownBar } from "@/components/zupet/CountdownBar";
+import { TopBanner } from "@/components/zupet/TopBanner";
 import { ExitIntent } from "@/components/zupet/ExitIntent";
 import { useCartSync } from "@/hooks/useCartSync";
 
@@ -140,8 +139,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <MetaPixel />
-      <CountdownBar />
-      <FreeShippingBar />
+      <TopBanner />
       <Outlet />
       <CartDrawer />
       <WhatsAppButton />
