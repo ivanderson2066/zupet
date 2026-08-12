@@ -95,6 +95,7 @@ export function CartDrawer() {
     if (ok) {
       rememberEmail(email);
       setEmailSaved(true);
+      trackLead({ content_name: "Recuperação de carrinho", value: subtotal, currency });
       toast.success("Tudo certo! 💌", {
         description: "Vamos guardar seu carrinho e te enviar um lembrete.",
 
