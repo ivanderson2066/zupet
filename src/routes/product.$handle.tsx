@@ -10,6 +10,7 @@ import {
   Award,
   ChevronLeft,
   Check,
+  Flame,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -76,6 +77,7 @@ function ProductPage() {
                   id: string;
                   title: string;
                   price: { amount: string; currencyCode: string };
+                  compareAtPrice?: { amount: string; currencyCode: string } | null;
                   availableForSale: boolean;
                   selectedOptions: Array<{ name: string; value: string }>;
                 };
@@ -171,6 +173,7 @@ function ProductDetail({
         node: {
           id: string;
           price: { amount: string; currencyCode: string };
+          compareAtPrice?: { amount: string; currencyCode: string } | null;
           availableForSale: boolean;
         };
       }>;
@@ -187,6 +190,9 @@ function ProductDetail({
   const currency = variant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode;
   const price = parseFloat(variant?.price.amount || product.priceRange.minVariantPrice.amount);
   const installments = installmentsFor(price);
+  const compareAt = variant?.compareAtPrice ? parseFloat(variant.compareAtPrice.amount) : 0;
+  const hasDiscount = compareAt > price;
+  const discountPct = hasDiscount ? Math.round(((compareAt - price) / compareAt) * 100) : 0;
 
   return (
     <>
@@ -224,11 +230,30 @@ function ProductDetail({
           <h1 className="text-3xl md:text-4xl font-black tracking-tight">{product.title}</h1>
 
           <div className="space-y-1">
+            {hasDiscount && (
+              <div className="flex items-center gap-2">
+                <span className="text-base text-muted-foreground line-through">
+                  {formatPrice(compareAt, currency)}
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground text-xs font-black">
+                  -{discountPct}% OFF
+                </span>
+              </div>
+            )}
             <span className="text-3xl md:text-4xl font-black text-primary block">
               {formatPrice(price, currency)}
             </span>
             <span className="text-sm text-muted-foreground block">
               ou {installments.count}x de {formatPrice(installments.value, currency)} sem juros
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">
+              <Flame className="h-3.5 w-3.5" /> Alta procura — estoque limitado
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 text-success border border-success/20">
+              <Check className="h-3.5 w-3.5" /> Peça hoje e entre no próximo envio
             </span>
           </div>
 
