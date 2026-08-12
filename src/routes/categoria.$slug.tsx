@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, PackageX } from "lucide-react";
-import { TopBar } from "@/components/zupet/TopBar";
 import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { ProductCard } from "@/components/zupet/ProductCard";

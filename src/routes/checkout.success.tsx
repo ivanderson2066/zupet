@@ -13,7 +13,6 @@ import {
   Share2,
 } from "lucide-react";
 import { toast } from "sonner";
-import { TopBar } from "@/components/zupet/TopBar";
 import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { Button } from "@/components/ui/button";

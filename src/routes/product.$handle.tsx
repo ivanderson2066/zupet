@@ -19,7 +19,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { TopBar } from "@/components/zupet/TopBar";
 import { Header } from "@/components/zupet/Header";
 import { Footer } from "@/components/zupet/Footer";
 import { BestSellers } from "@/components/zupet/BestSellers";
