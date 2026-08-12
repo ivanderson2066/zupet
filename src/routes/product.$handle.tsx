@@ -103,7 +103,6 @@ function ProductPage() {
 
   return (
     <div className="min-h-screen bg-background pb-24 md:pb-0">
-      <TopBar />
       <Header />
       <main>
         <div className="container mx-auto px-4 py-4 text-sm">
