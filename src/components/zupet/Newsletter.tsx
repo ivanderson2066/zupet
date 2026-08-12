@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Mail, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { claimCoupon } from "@/lib/claimCoupon";
+import { trackLead, trackCompleteRegistration } from "@/lib/pixel";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -27,12 +28,15 @@ export function Newsletter() {
         toast.success("Cupom de 10% liberado!", {
           description: `Use ${result.coupon} no checkout. Enviamos os detalhes no seu e-mail.`,
         });
+        trackLead({ content_name: "Newsletter 10% OFF", value: 0, currency: "BRL" });
+        trackCompleteRegistration({ content_name: "Newsletter Zupet", status: "completed" });
       }
       setEmail("");
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <section className="py-14 bg-gradient-brand text-primary-foreground">

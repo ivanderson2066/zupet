@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
-import { trackInitiateCheckout } from "@/lib/pixel";
+import { trackInitiateCheckout, trackLead } from "@/lib/pixel";
 import { saveAbandonedCart } from "@/lib/abandonedCart";
 import { getSavedEmail, rememberEmail } from "@/lib/claimCoupon";
 import { toast } from "sonner";
@@ -95,6 +95,7 @@ export function CartDrawer() {
     if (ok) {
       rememberEmail(email);
       setEmailSaved(true);
+      trackLead({ content_name: "Recuperação de carrinho", value: subtotal, currency });
       toast.success("Tudo certo! 💌", {
         description: "Vamos guardar seu carrinho e te enviar um lembrete.",
 
