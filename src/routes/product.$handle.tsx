@@ -70,6 +70,7 @@ function ProductPage() {
             title: string;
             description: string;
             handle: string;
+            productType?: string;
             images: { edges: Array<{ node: { url: string; altText: string | null } }> };
             variants: {
               edges: Array<{
@@ -89,17 +90,21 @@ function ProductPage() {
     },
   });
 
+  const trackedRef = useRef(false);
   useEffect(() => {
-    if (!data) return;
+    if (!data || trackedRef.current) return;
     const v = data.variants.edges[0]?.node;
     const price = parseFloat(v?.price.amount || data.priceRange.minVariantPrice.amount);
     trackViewContent({
       content_ids: [v?.id || data.id],
       content_name: data.title,
+      content_type: "product",
       value: price,
       currency: v?.price.currencyCode || data.priceRange.minVariantPrice.currencyCode || "BRL",
     });
+    trackedRef.current = true;
   }, [data]);
+
 
 
   return (
