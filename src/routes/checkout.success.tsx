@@ -230,7 +230,7 @@ function SuccessPage() {
                 </Button>
                 <Button size="sm" variant="outline" asChild>
                   <a
-                    href="https://wa.me/5511999999999?text=Olá! Acabei de fazer um pedido na Zupet"
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Acabei de fazer um pedido na Zupet`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
