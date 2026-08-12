@@ -18,8 +18,10 @@ import { Footer } from "@/components/zupet/Footer";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
 import { ReviewForm } from "@/components/zupet/ReviewForm";
+import { trackPurchase } from "@/lib/pixel";
 
 const NEXT_COUPON = "ZUVOLTA15";
+const WHATSAPP_NUMBER = "5598991891675";
 
 const searchSchema = z.object({
   order: z.string().optional(),
@@ -52,6 +54,21 @@ function SuccessPage() {
     const t = setTimeout(() => setConfettiDone(true), 1500);
     return () => clearTimeout(t);
   }, [clearCart]);
+
+  useEffect(() => {
+    // dispara Purchase uma única vez quando temos order e total na URL
+    if (order && total) {
+      const numericTotal = parseFloat(total.replace(/[^\d.,]/g, "").replace(".", "").replace(",", ".") || "0");
+      trackPurchase({
+        content_ids: [],
+        value: numericTotal,
+        currency: "BRL",
+        num_items: 1,
+        order_id: order,
+      });
+    }
+  }, [order, total]);
+
 
   const copyCoupon = async () => {
     try {
