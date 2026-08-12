@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
-import { trackInitiateCheckout } from "@/lib/pixel";
+import { trackInitiateCheckout, trackLead } from "@/lib/pixel";
 import { saveAbandonedCart } from "@/lib/abandonedCart";
 import { getSavedEmail, rememberEmail } from "@/lib/claimCoupon";
 import { toast } from "sonner";
