@@ -15,6 +15,10 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
   const currency = variant?.price.currencyCode || p.priceRange.minVariantPrice.currencyCode;
   const price = parseFloat(variant?.price.amount || p.priceRange.minVariantPrice.amount);
   const installments = installmentsFor(price);
+  const compareAt = variant?.compareAtPrice ? parseFloat(variant.compareAtPrice.amount) : 0;
+  const hasDiscount = compareAt > price;
+  const discountPct = hasDiscount ? Math.round(((compareAt - price) / compareAt) * 100) : 0;
+  const soldOut = variant ? variant.availableForSale === false : false;
 
 
   const handleAdd = async (e: React.MouseEvent) => {
@@ -53,6 +57,18 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
         <Badge className="absolute top-3 left-3 bg-accent text-accent-foreground font-bold rounded-full">
           Top venda
         </Badge>
+        {hasDiscount && (
+          <Badge className="absolute top-3 right-3 bg-destructive text-destructive-foreground font-black rounded-full">
+            -{discountPct}%
+          </Badge>
+        )}
+        {soldOut && (
+          <div className="absolute inset-0 grid place-items-center bg-background/70 backdrop-blur-[2px]">
+            <span className="px-3 py-1.5 rounded-full bg-foreground text-background text-xs font-black uppercase">
+              Esgotado
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="p-4 flex flex-col flex-1 gap-2">
@@ -61,6 +77,11 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
         </h3>
         <div className="mt-auto pt-2 space-y-2">
           <div className="space-y-0.5">
+            {hasDiscount && (
+              <span className="text-xs text-muted-foreground line-through block">
+                {formatPrice(compareAt, currency)}
+              </span>
+            )}
             <span className="text-lg font-black text-primary block">
               {formatPrice(price, currency)}
             </span>
@@ -73,14 +94,14 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
           </div>
           <Button
             onClick={handleAdd}
-            disabled={isLoading || !variant}
+            disabled={isLoading || !variant || soldOut}
             className="w-full rounded-xl bg-gradient-accent text-accent-foreground font-bold hover:opacity-95"
           >
             {isLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>
-                <ShoppingBag className="h-4 w-4 mr-1.5" /> Comprar Agora
+                <ShoppingBag className="h-4 w-4 mr-1.5" /> {soldOut ? "Esgotado" : "Comprar Agora"}
               </>
             )}
           </Button>
