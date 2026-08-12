@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { TopBar } from "./TopBar";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
@@ -12,7 +11,6 @@ interface PageShellProps {
 export function PageShell({ title, subtitle, children }: PageShellProps) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <TopBar />
       <Header />
       <main className="flex-1">
         <section className="bg-gradient-soft border-b border-border">
