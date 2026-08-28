@@ -1,6 +1,7 @@
 import { Star, ShieldCheck, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/zupet-hero.jpg";
+import { LiveActivity } from "./LiveActivity";
 
 export function Hero() {
   return (
@@ -11,9 +12,12 @@ export function Hero() {
       <div className="container mx-auto px-4 py-10 md:py-20 relative">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="space-y-6 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-bold uppercase tracking-wide">
-              <Flame className="h-3.5 w-3.5" />
-              Mais vendidos do Brasil
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-bold uppercase tracking-wide">
+                <Flame className="h-3.5 w-3.5" />
+                Mais vendidos do Brasil
+              </div>
+              <LiveActivity />
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.05]">
               Os produtos que estão{" "}

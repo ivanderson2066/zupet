@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/zupet/Header";
 import { Hero } from "@/components/zupet/Hero";
 import { SocialProof } from "@/components/zupet/SocialProof";
+import { Marquee } from "@/components/zupet/Marquee";
 import { Benefits } from "@/components/zupet/Benefits";
 import { BestSellers } from "@/components/zupet/BestSellers";
 import { CategoriesGrid } from "@/components/zupet/CategoriesGrid";
@@ -45,6 +46,7 @@ function Index() {
       <Header />
       <main>
         <Hero />
+        <Marquee />
         <SocialProof />
         <Benefits />
         <CategoriesGrid />
