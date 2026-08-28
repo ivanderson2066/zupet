@@ -1,6 +1,7 @@
 import { Star, ShieldCheck, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/zupet-hero.jpg";
+import { LiveActivity } from "./LiveActivity";
 
 export function Hero() {
   return (
