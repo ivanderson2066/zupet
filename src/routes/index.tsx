@@ -45,6 +45,7 @@ function Index() {
       <Header />
       <main>
         <Hero />
+        <Marquee />
         <SocialProof />
         <Benefits />
         <CategoriesGrid />
