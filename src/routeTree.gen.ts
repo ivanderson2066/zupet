@@ -16,6 +16,7 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RastreioRouteImport } from './routes/rastreio'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as OfertaRouteImport } from './routes/oferta'
 import { Route as EnvioRouteImport } from './routes/envio'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IndexRouteImport } from './routes/index'
@@ -64,6 +65,11 @@ const RastreioRoute = RastreioRouteImport.update({
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfertaRoute = OfertaRouteImport.update({
+  id: '/oferta',
+  path: '/oferta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnvioRoute = EnvioRouteImport.update({
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
   '/envio': typeof EnvioRoute
+  '/oferta': typeof OfertaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/rastreio': typeof RastreioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
   '/envio': typeof EnvioRoute
+  '/oferta': typeof OfertaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/rastreio': typeof RastreioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
   '/envio': typeof EnvioRoute
+  '/oferta': typeof OfertaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/rastreio': typeof RastreioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contato'
     | '/envio'
+    | '/oferta'
     | '/privacidade'
     | '/rastreio'
     | '/sitemap.xml'
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contato'
     | '/envio'
+    | '/oferta'
     | '/privacidade'
     | '/rastreio'
     | '/sitemap.xml'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contato'
     | '/envio'
+    | '/oferta'
     | '/privacidade'
     | '/rastreio'
     | '/sitemap.xml'
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContatoRoute: typeof ContatoRoute
   EnvioRoute: typeof EnvioRoute
+  OfertaRoute: typeof OfertaRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   RastreioRoute: typeof RastreioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -357,6 +370,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidade'
       fullPath: '/privacidade'
       preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/oferta': {
+      id: '/oferta'
+      path: '/oferta'
+      fullPath: '/oferta'
+      preLoaderRoute: typeof OfertaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/envio': {
@@ -464,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContatoRoute: ContatoRoute,
   EnvioRoute: EnvioRoute,
+  OfertaRoute: OfertaRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   RastreioRoute: RastreioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
