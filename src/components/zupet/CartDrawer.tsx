@@ -26,6 +26,7 @@ import { formatPrice } from "@/lib/shopify";
 import { trackInitiateCheckout, trackLead } from "@/lib/pixel";
 import { saveAbandonedCart } from "@/lib/abandonedCart";
 import { getSavedEmail, rememberEmail } from "@/lib/claimCoupon";
+import { withUtm } from "@/lib/utm";
 import { toast } from "sonner";
 
 export function CartDrawer() {
@@ -125,7 +126,7 @@ export function CartDrawer() {
       value: subtotal,
       currency,
     });
-    window.open(url, "_blank");
+    window.open(withUtm(url), "_blank");
     setOpen(false);
   };
 
