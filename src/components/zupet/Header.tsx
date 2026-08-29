@@ -35,6 +35,7 @@ export function Header() {
             <Link to="/categoria/$slug" params={{ slug: "gatos" }} className="hover:text-primary transition-colors">Gatos</Link>
             <Link to="/categoria/$slug" params={{ slug: "brinquedos" }} className="hover:text-primary transition-colors">Brinquedos</Link>
             <Link to="/categoria/$slug" params={{ slug: "tecnologia" }} className="hover:text-primary transition-colors">Tech Pet</Link>
+            <Link to="/oferta" className="text-accent font-bold hover:text-accent/80 transition-colors">Ofertas</Link>
             <Link to="/sobre" className="hover:text-primary transition-colors">Sobre</Link>
           </nav>
 
@@ -80,6 +81,9 @@ export function Header() {
                   </SheetClose>
                   <SheetClose asChild>
                     <Link to="/categoria/$slug" params={{ slug: "tecnologia" }} className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Tech Pet</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/oferta" className="py-3 px-3 rounded-lg hover:bg-secondary font-bold text-accent">Ofertas</Link>
                   </SheetClose>
                   <SheetClose asChild>
                     <Link to="/sobre" className="py-3 px-3 rounded-lg hover:bg-secondary font-medium">Sobre</Link>
