@@ -18,6 +18,7 @@ import { WhatsAppButton } from "@/components/zupet/WhatsAppButton";
 import { TopBanner } from "@/components/zupet/TopBanner";
 import { ExitIntent } from "@/components/zupet/ExitIntent";
 import { useCartSync } from "@/hooks/useCartSync";
+import { captureUtm } from "@/lib/utm";
 
 function NotFoundComponent() {
   return (
@@ -135,6 +136,9 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   useCartSync();
+  useEffect(() => {
+    captureUtm();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

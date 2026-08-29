@@ -49,6 +49,7 @@ export function Footer() {
           <div>
             <h3 className="font-bold mb-4">Ajuda</h3>
             <ul className="space-y-2 text-sm text-background/70">
+              <li><Link to="/oferta" className="hover:text-background">Ofertas da semana</Link></li>
               <li><Link to="/rastreio" className="hover:text-background flex items-center gap-1.5"><PackageSearch className="h-3.5 w-3.5" /> Rastrear pedido</Link></li>
               <li><Link to="/envio" className="hover:text-background">Política de Envio</Link></li>
               <li><Link to="/trocas" className="hover:text-background">Trocas e Devoluções</Link></li>

@@ -75,7 +75,7 @@ const NUMBERS = [
   { value: "até 1h", label: "resposta no WhatsApp" },
 ];
 
-export default function SobrePage() {
+function SobrePage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
