@@ -43,6 +43,11 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link to="/categorias" className="hover:text-background font-semibold">
+                  Ver todas
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -51,10 +56,13 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-background/70">
               <li><Link to="/oferta" className="hover:text-background">Ofertas da semana</Link></li>
               <li><Link to="/rastreio" className="hover:text-background flex items-center gap-1.5"><PackageSearch className="h-3.5 w-3.5" /> Rastrear pedido</Link></li>
+              <li><Link to="/faq" className="hover:text-background">Perguntas frequentes</Link></li>
+              <li><Link to="/pagamento" className="hover:text-background">Formas de pagamento</Link></li>
               <li><Link to="/envio" className="hover:text-background">Política de Envio</Link></li>
               <li><Link to="/trocas" className="hover:text-background">Trocas e Devoluções</Link></li>
               <li><Link to="/privacidade" className="hover:text-background">Privacidade</Link></li>
               <li><Link to="/termos" className="hover:text-background">Termos de Uso</Link></li>
+              <li><Link to="/cookies" className="hover:text-background">Cookies</Link></li>
             </ul>
           </div>
 

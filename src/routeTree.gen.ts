@@ -16,9 +16,11 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RastreioRouteImport } from './routes/rastreio'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as PagamentoRouteImport } from './routes/pagamento'
 import { Route as OfertaRouteImport } from './routes/oferta'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EnvioRouteImport } from './routes/envio'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as IndexRouteImport } from './routes/index'
@@ -69,6 +71,11 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PagamentoRoute = PagamentoRouteImport.update({
+  id: '/pagamento',
+  path: '/pagamento',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OfertaRoute = OfertaRouteImport.update({
   id: '/oferta',
   path: '/oferta',
@@ -82,6 +89,11 @@ const FaqRoute = FaqRouteImport.update({
 const EnvioRoute = EnvioRouteImport.update({
   id: '/envio',
   path: '/envio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContatoRoute = ContatoRouteImport.update({
@@ -164,9 +176,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/categorias': typeof CategoriasRoute
   '/contato': typeof ContatoRoute
+  '/cookies': typeof CookiesRoute
   '/envio': typeof EnvioRoute
   '/faq': typeof FaqRoute
   '/oferta': typeof OfertaRoute
+  '/pagamento': typeof PagamentoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/rastreio': typeof RastreioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -190,9 +204,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/categorias': typeof CategoriasRoute
   '/contato': typeof ContatoRoute
+  '/cookies': typeof CookiesRoute
   '/envio': typeof EnvioRoute
   '/faq': typeof FaqRoute
   '/oferta': typeof OfertaRoute
+  '/pagamento': typeof PagamentoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/rastreio': typeof RastreioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -217,9 +233,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/categorias': typeof CategoriasRoute
   '/contato': typeof ContatoRoute
+  '/cookies': typeof CookiesRoute
   '/envio': typeof EnvioRoute
   '/faq': typeof FaqRoute
   '/oferta': typeof OfertaRoute
+  '/pagamento': typeof PagamentoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/rastreio': typeof RastreioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -245,9 +263,11 @@ export interface FileRouteTypes {
     | '/'
     | '/categorias'
     | '/contato'
+    | '/cookies'
     | '/envio'
     | '/faq'
     | '/oferta'
+    | '/pagamento'
     | '/privacidade'
     | '/rastreio'
     | '/sitemap.xml'
@@ -271,9 +291,11 @@ export interface FileRouteTypes {
     | '/'
     | '/categorias'
     | '/contato'
+    | '/cookies'
     | '/envio'
     | '/faq'
     | '/oferta'
+    | '/pagamento'
     | '/privacidade'
     | '/rastreio'
     | '/sitemap.xml'
@@ -297,9 +319,11 @@ export interface FileRouteTypes {
     | '/'
     | '/categorias'
     | '/contato'
+    | '/cookies'
     | '/envio'
     | '/faq'
     | '/oferta'
+    | '/pagamento'
     | '/privacidade'
     | '/rastreio'
     | '/sitemap.xml'
@@ -324,9 +348,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CategoriasRoute: typeof CategoriasRoute
   ContatoRoute: typeof ContatoRoute
+  CookiesRoute: typeof CookiesRoute
   EnvioRoute: typeof EnvioRoute
   FaqRoute: typeof FaqRoute
   OfertaRoute: typeof OfertaRoute
+  PagamentoRoute: typeof PagamentoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   RastreioRoute: typeof RastreioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -398,6 +424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pagamento': {
+      id: '/pagamento'
+      path: '/pagamento'
+      fullPath: '/pagamento'
+      preLoaderRoute: typeof PagamentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/oferta': {
       id: '/oferta'
       path: '/oferta'
@@ -417,6 +450,13 @@ declare module '@tanstack/react-router' {
       path: '/envio'
       fullPath: '/envio'
       preLoaderRoute: typeof EnvioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contato': {
@@ -524,9 +564,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CategoriasRoute: CategoriasRoute,
   ContatoRoute: ContatoRoute,
+  CookiesRoute: CookiesRoute,
   EnvioRoute: EnvioRoute,
   FaqRoute: FaqRoute,
   OfertaRoute: OfertaRoute,
+  PagamentoRoute: PagamentoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   RastreioRoute: RastreioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
