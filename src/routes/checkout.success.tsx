@@ -102,7 +102,7 @@ function SuccessPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-gradient-soft flex flex-col">
       <Header />
 
       <main className="flex-1">
