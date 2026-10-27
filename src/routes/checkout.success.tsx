@@ -50,6 +50,11 @@ function SuccessPage() {
 
   useEffect(() => {
     clearCart();
+    try {
+      localStorage.setItem("zupet-converted", "1");
+    } catch {
+      /* ignore */
+    }
     // pequena animação ao montar
     const t = setTimeout(() => setConfettiDone(true), 1500);
     return () => clearTimeout(t);
@@ -97,7 +102,7 @@ function SuccessPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-gradient-soft flex flex-col">
       <Header />
 
       <main className="flex-1">

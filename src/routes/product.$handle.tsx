@@ -108,7 +108,7 @@ function ProductPage() {
 
 
   return (
-    <div className="min-h-screen bg-background pb-24 md:pb-0">
+    <div className="min-h-screen bg-gradient-soft pb-24 md:pb-0">
       <Header />
       <main>
         <div className="container mx-auto px-4 py-4 text-sm">

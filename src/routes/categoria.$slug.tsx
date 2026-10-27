@@ -52,7 +52,7 @@ function CategoryPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-soft">
       <Header />
       <main>
         <section className={`bg-gradient-to-br ${category.gradient} border-b border-border`}>

@@ -77,19 +77,21 @@ const NUMBERS = [
 
 function SobrePage() {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-gradient-soft flex flex-col">
       <Header />
       <main className="flex-1">
         {/* Hero */}
-        <section className="bg-gradient-soft border-b border-border">
-          <div className="container mx-auto px-4 py-14 md:py-20 max-w-3xl">
-            <p className="text-accent font-bold uppercase tracking-wide text-xs mb-3">
+        <section className="relative overflow-hidden bg-gradient-brand text-primary-foreground">
+          <span aria-hidden className="absolute -right-8 -top-8 text-[11rem] opacity-15 rotate-12 select-none">🐾</span>
+          <span aria-hidden className="absolute left-6 bottom-2 text-7xl opacity-10 -rotate-12 select-none">🐾</span>
+          <div className="relative container mx-auto px-4 py-14 md:py-20 max-w-3xl">
+            <p className="inline-block rounded-full bg-accent text-accent-foreground px-3 py-1 font-bold uppercase tracking-wide text-xs mb-4">
               Nossa história
             </p>
             <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] mb-4">
               Uma loja pet premium feita por quem também é tutor
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg opacity-90">
               A Zupet nasceu da paixão de tutores que sentiam falta de uma loja brasileira realmente
               premium — com produtos selecionados, design moderno e atendimento humano de verdade.
             </p>
@@ -97,13 +99,13 @@ function SobrePage() {
         </section>
 
         {/* Números */}
-        <section className="border-b border-border bg-secondary/40">
+        <section className="bg-gradient-accent text-accent-foreground">
           <div className="container mx-auto px-4 py-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {NUMBERS.map((n) => (
                 <div key={n.label}>
-                  <p className="text-2xl md:text-3xl font-black text-primary">{n.value}</p>
-                  <p className="text-xs md:text-sm text-muted-foreground">{n.label}</p>
+                  <p className="text-2xl md:text-3xl font-black">{n.value}</p>
+                  <p className="text-xs md:text-sm opacity-90">{n.label}</p>
                 </div>
               ))}
             </div>
@@ -140,7 +142,7 @@ function SobrePage() {
         </section>
 
         {/* Como escolhemos */}
-        <section className="py-14 md:py-20 bg-secondary/40 border-y border-border">
+        <section className="py-14 md:py-20 bg-primary/10 border-y border-border">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-8">
               Como escolhemos cada produto
@@ -179,20 +181,20 @@ function SobrePage() {
         {/* CTA */}
         <section className="pb-16 md:pb-24">
           <div className="container mx-auto px-4">
-            <div className="rounded-3xl bg-gradient-soft border border-border p-8 md:p-14 text-center">
+            <div className="rounded-3xl bg-gradient-brand text-primary-foreground p-8 md:p-14 text-center shadow-xl">
               <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-3">
                 Pronto para deixar seu pet mais feliz?
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto mb-7">
+              <p className="opacity-90 max-w-xl mx-auto mb-7">
                 Comece pela nossa seleção com 10% de desconto e frete grátis acima de R$ 49.
               </p>
               <div className="flex flex-wrap gap-3 justify-center">
-                <Button asChild size="lg" className="rounded-full font-bold px-8">
+                <Button asChild size="lg" className="rounded-full font-bold px-8 bg-accent text-accent-foreground hover:bg-accent/90">
                   <Link to="/oferta">
                     Ver ofertas <ArrowRight className="h-4 w-4 ml-1.5" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="rounded-full font-bold px-8">
+                <Button asChild size="lg" variant="secondary" className="rounded-full font-bold px-8">
                   <Link to="/contato">Falar com a gente</Link>
                 </Button>
               </div>
