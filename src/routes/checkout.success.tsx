@@ -24,8 +24,8 @@ const NEXT_COUPON = "ZUVOLTA15";
 const WHATSAPP_NUMBER = "5598991891675";
 
 const searchSchema = z.object({
-  order: z.string().optional(),
-  total: z.string().optional(),
+  order: z.coerce.string().optional().catch(undefined),
+  total: z.coerce.string().optional().catch(undefined),
 });
 
 export const Route = createFileRoute("/checkout/success")({
@@ -125,11 +125,26 @@ function SuccessPage() {
                 Sua patinha bateu o pé certo. Já estamos preparando tudo com muito carinho.
               </p>
               {order && (
-                <p className="text-sm text-muted-foreground">
-                  Nº do pedido: <span className="font-mono font-semibold text-foreground">#{order}</span>
-                  {total && <> · Total: <span className="font-semibold text-foreground">{total}</span></>}
-                </p>
+                <div className="inline-flex flex-wrap items-center justify-center gap-2 mt-4 rounded-2xl border bg-card px-5 py-3 shadow-card text-sm">
+                  <PawPrint className="h-4 w-4 text-accent" />
+                  <span className="text-muted-foreground">Pedido</span>
+                  <span className="font-mono font-bold">#{order}</span>
+                  {total && (
+                    <>
+                      <span className="text-muted-foreground">·</span>
+                      <span className="font-bold text-primary">{total}</span>
+                    </>
+                  )}
+                </div>
               )}
+              <div className="mt-6 mx-auto max-w-md">
+                <div className="flex justify-between text-xs font-semibold text-muted-foreground mb-2">
+                  <span className="text-primary">Confirmado</span><span>Preparando</span><span>Enviado</span><span>Entregue</span>
+                </div>
+                <div className="h-2 rounded-full bg-secondary overflow-hidden">
+                  <div className="h-full w-1/4 bg-gradient-brand rounded-full" />
+                </div>
+              </div>
             </div>
           </div>
         </section>
