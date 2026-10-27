@@ -50,6 +50,11 @@ function SuccessPage() {
 
   useEffect(() => {
     clearCart();
+    try {
+      localStorage.setItem("zupet-converted", "1");
+    } catch {
+      /* ignore */
+    }
     // pequena animação ao montar
     const t = setTimeout(() => setConfettiDone(true), 1500);
     return () => clearTimeout(t);

@@ -18,11 +18,16 @@ export function ExitIntent() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (localStorage.getItem(STORAGE_KEY)) return;
+    const blocked = () =>
+      !!localStorage.getItem(STORAGE_KEY) ||
+      !!localStorage.getItem("zupet-converted") ||
+      !!localStorage.getItem("zupet-lead-email") ||
+      window.location.pathname.startsWith("/checkout");
+    if (blocked()) return;
 
     let triggered = false;
     const trigger = () => {
-      if (triggered) return;
+      if (triggered || blocked()) return;
       triggered = true;
       setOpen(true);
       localStorage.setItem(STORAGE_KEY, "1");
