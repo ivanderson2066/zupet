@@ -77,19 +77,21 @@ const NUMBERS = [
 
 function SobrePage() {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-gradient-soft flex flex-col">
       <Header />
       <main className="flex-1">
         {/* Hero */}
-        <section className="bg-gradient-soft border-b border-border">
-          <div className="container mx-auto px-4 py-14 md:py-20 max-w-3xl">
-            <p className="text-accent font-bold uppercase tracking-wide text-xs mb-3">
+        <section className="relative overflow-hidden bg-gradient-brand text-primary-foreground">
+          <span aria-hidden className="absolute -right-8 -top-8 text-[11rem] opacity-15 rotate-12 select-none">🐾</span>
+          <span aria-hidden className="absolute left-6 bottom-2 text-7xl opacity-10 -rotate-12 select-none">🐾</span>
+          <div className="relative container mx-auto px-4 py-14 md:py-20 max-w-3xl">
+            <p className="inline-block rounded-full bg-accent text-accent-foreground px-3 py-1 font-bold uppercase tracking-wide text-xs mb-4">
               Nossa história
             </p>
             <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] mb-4">
               Uma loja pet premium feita por quem também é tutor
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg opacity-90">
               A Zupet nasceu da paixão de tutores que sentiam falta de uma loja brasileira realmente
               premium — com produtos selecionados, design moderno e atendimento humano de verdade.
             </p>
@@ -97,7 +99,7 @@ function SobrePage() {
         </section>
 
         {/* Números */}
-        <section className="border-b border-border bg-secondary/40">
+        <section className="bg-gradient-accent text-accent-foreground">
           <div className="container mx-auto px-4 py-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {NUMBERS.map((n) => (
